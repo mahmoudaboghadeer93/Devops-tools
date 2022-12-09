@@ -204,9 +204,9 @@ spec:
                   name: efs-provisioner
                   key: provisioner.name
             - name: AWS_ACCESS_KEY_ID
-              value: AKIAWQ2RS3LBDDVBVIX7
+              value: gggggggggg
             - name: AWS_SECRET_ACCESS_KEY
-              value: 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
+              value: ffffff
           resources: {}
           volumeMounts:
             - name: pv-volume
