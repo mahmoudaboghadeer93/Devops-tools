@@ -1,0 +1,222 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+  uid: 5e1cf724-2cb0-4ebd-87a9-8b678a5b7728
+  resourceVersion: '150588848'
+  generation: 14
+  creationTimestamp: '2021-12-21T12:56:13Z'
+  labels:
+    app: cluster-autoscaler
+  annotations:
+    deployment.kubernetes.io/revision: '14'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"cluster-autoscaler"},"name":"cluster-autoscaler","namespace":"kube-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"cluster-autoscaler"}},"template":{"metadata":{"annotations":{"prometheus.io/port":"8085","prometheus.io/scrape":"true"},"labels":{"app":"cluster-autoscaler"}},"spec":{"containers":[{"command":["./cluster-autoscaler","--v=4","--stderrthreshold=info","--cloud-provider=aws","--skip-nodes-with-local-storage=false","--expander=least-waste","--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/\u003cYOUR
+      CLUSTER
+      NAME\u003e"],"image":"k8s.gcr.io/autoscaling/cluster-autoscaler:v1.21.0","imagePullPolicy":"Always","name":"cluster-autoscaler","resources":{"limits":{"cpu":"100m","memory":"600Mi"},"requests":{"cpu":"100m","memory":"600Mi"}},"volumeMounts":[{"mountPath":"/etc/ssl/certs/ca-certificates.crt","name":"ssl-certs","readOnly":true}]}],"priorityClassName":"system-cluster-critical","securityContext":{"fsGroup":65534,"runAsNonRoot":true,"runAsUser":65534},"serviceAccountName":"cluster-autoscaler","volumes":[{"hostPath":{"path":"/etc/ssl/certs/ca-bundle.crt"},"name":"ssl-certs"}]}}}}
+  managedFields:
+    - manager: kubectl-client-side-apply
+      operation: Update
+      apiVersion: apps/v1
+      time: '2021-12-21T12:56:13Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+          f:labels:
+            .: {}
+            f:app: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:annotations:
+                .: {}
+                f:prometheus.io/port: {}
+                f:prometheus.io/scrape: {}
+              f:labels:
+                .: {}
+                f:app: {}
+            f:spec:
+              f:containers:
+                k:{"name":"cluster-autoscaler"}:
+                  .: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:resources:
+                    .: {}
+                    f:limits:
+                      .: {}
+                      f:cpu: {}
+                      f:memory: {}
+                    f:requests:
+                      .: {}
+                      f:cpu: {}
+                      f:memory: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+                  f:volumeMounts:
+                    .: {}
+                    k:{"mountPath":"/etc/ssl/certs/ca-certificates.crt"}:
+                      .: {}
+                      f:mountPath: {}
+                      f:name: {}
+                      f:readOnly: {}
+              f:dnsPolicy: {}
+              f:priorityClassName: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext:
+                .: {}
+                f:fsGroup: {}
+                f:runAsNonRoot: {}
+                f:runAsUser: {}
+              f:serviceAccount: {}
+              f:serviceAccountName: {}
+              f:terminationGracePeriodSeconds: {}
+              f:volumes:
+                .: {}
+                k:{"name":"ssl-certs"}:
+                  .: {}
+                  f:hostPath:
+                    .: {}
+                    f:path: {}
+                    f:type: {}
+                  f:name: {}
+    - manager: node-fetch
+      operation: Update
+      apiVersion: apps/v1
+      time: '2022-11-25T12:08:14Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:template:
+            f:metadata:
+              f:annotations:
+                f:cluster-autoscaler.kubernetes.io/safe-to-evict: {}
+            f:spec:
+              f:containers:
+                k:{"name":"cluster-autoscaler"}:
+                  f:command: {}
+              f:tolerations: {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2022-11-30T10:45:24Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+  selfLink: /apis/apps/v1/namespaces/kube-system/deployments/cluster-autoscaler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-autoscaler
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cluster-autoscaler
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: 'true'
+        prometheus.io/port: '8085'
+        prometheus.io/scrape: 'true'
+    spec:
+      volumes:
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs/ca-bundle.crt
+            type: ''
+      containers:
+        - name: cluster-autoscaler
+          image: k8s.gcr.io/autoscaling/cluster-autoscaler:v1.21.0
+          command:
+            - ./cluster-autoscaler
+            - '--v=4'
+            - '--stderrthreshold=info'
+            - '--cloud-provider=aws'
+            - '--scan-interval=1m'
+            - '--scale-down-utilization-threshold=0.22'
+            - '--scale-down-unneeded-time=15m'
+            - '--skip-nodes-with-local-storage=false'
+            - '--expander=least-waste'
+            - >-
+              --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/CORE-cluster
+            - '--balance-similar-node-groups'
+            - '--skip-nodes-with-system-pods=false'
+          resources:
+            limits:
+              cpu: 100m
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 600Mi
+          volumeMounts:
+            - name: ssl-certs
+              readOnly: true
+              mountPath: /etc/ssl/certs/ca-certificates.crt
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: cluster-autoscaler
+      serviceAccount: cluster-autoscaler
+      securityContext:
+        runAsUser: 65534
+        runAsNonRoot: true
+        fsGroup: 65534
+      schedulerName: default-scheduler
+      tolerations:
+        - key: permanent
+          operator: Equal
+          value: 'true'
+          effect: NoExecute
+      priorityClassName: system-cluster-critical
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
