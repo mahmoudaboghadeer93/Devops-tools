@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: core-app
+  uid: 660d6869-abe2-4c88-9a56-5aa4200acbbe
+  resourceVersion: '150338635'
+  generation: 20
+  creationTimestamp: '2022-02-18T13:21:38Z'
+  annotations:
+    cluster-autoscaler.kubernetes.io/safe-to-evict: 'false'
+    deployment.kubernetes.io/revision: '17'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"creationTimestamp":"2022-02-18T13:21:38Z","generation":1,"name":"jenkins","namespace":"core-app","selfLink":"/apis/apps/v1/namespaces/core-app/deployments/jenkins","uid":"660d6869-abe2-4c88-9a56-5aa4200acbbe"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/name":"jenkins"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app.kubernetes.io/name":"jenkins"}},"spec":{"containers":[{"env":[{"name":"JAVA_OPTS","value":"-Xmx4096m
+      -Xms1400m
+      -XX:MaxPermSize=2000"}],"image":"jenkins/jenkins:2.332.3","imagePullPolicy":"IfNotPresent","name":"jenkins-core-container","ports":[{"containerPort":8080,"protocol":"TCP"},{"containerPort":8080,"protocol":"TCP"}],"resources":{"limits":{"cpu":"1048m","memory":"5Gi"},"requests":{"cpu":"1048m","memory":"5Gi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/var/jenkins_home","name":"jenkins-home"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"name":"jenkins-home","persistentVolumeClaim":{"claimName":"jenkins"}}]}}}}
+  selfLink: /apis/apps/v1/namespaces/core-app/deployments/jenkins
+status:
+  observedGeneration: 20
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2022-11-28T22:13:37Z'
+      lastTransitionTime: '2022-02-18T13:21:38Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "jenkins-6465485fd" has successfully progressed.
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2022-11-29T19:40:40Z'
+      lastTransitionTime: '2022-11-29T19:40:40Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jenkins
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: jenkins
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2022-11-06T13:45:56Z'
+    spec:
+      volumes:
+        - name: jenkins-home
+          persistentVolumeClaim:
+            claimName: jenkins
+      containers:
+        - name: jenkins-core-container
+          image: jenkins/jenkins:2.361.3
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: JAVA_OPTS
+              value: '-Xmx4096m -Xms1400m -XX:MaxPermSize=2000'
+          resources:
+            limits:
+              cpu: '2'
+              memory: 8Gi
+            requests:
+              cpu: '2'
+              memory: 8Gi
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: jenkins
+      serviceAccount: jenkins
+      securityContext: {}
+      schedulerName: default-scheduler
+      tolerations:
+        - key: permanent
+          operator: Equal
+          value: 'true'
+          effect: NoExecute
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
