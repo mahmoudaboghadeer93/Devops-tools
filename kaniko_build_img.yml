@@ -1,0 +1,55 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+              - name: kaniko
+                image: gcr.io/kaniko-project/executor:v1.7.0-debug
+                tty: true
+                command:
+                - /busybox/sleep
+                - infinity
+                volumeMounts:
+                   - name: kaniko-secret
+                     mountPath: /kaniko/.docker
+              restartPolicy: Never
+              volumes:
+                  - name: kaniko-secret
+                    secret:
+                        secretName: jfrog
+                        items:
+                        - key: .dockerconfigjson
+                          path: config.json    
+            '''
+        }
+    }
+    parameters {
+        string(name: 'DockerFile_Git_Repo',defaultValue: 'https://github.vodafone.com/VFGroup-MyVodafone-OnePlatform/DevOps-Resources.git', description: 'Git Repo for dockerfile')
+        string(name: 'Branch_name',defaultValue: 'master', description: 'Git Branch Name')     
+        string(name: 'DockerFile_Folder',defaultValue: 'Docker-Resources/', description: 'docker folder for dockerfile of image')
+        string(name: 'DockerFile_Name',defaultValue: 'Dockerfile', description: 'dockerfile name')
+        string(name: 'IMAGE_NAME', description: 'image name')
+        string(name: 'IMAGE_TAG',  description: 'image tag')
+    }    
+    stages {
+        stage('Build image') {
+            environment {
+                PATH = "/busybox:/kaniko:$PATH"
+            }
+            steps {
+                container(name: 'kaniko', shell: '/busybox/sh') {
+                    configFileProvider([configFile(fileId: '35079d5e-19f3-43ce-9984-d4320c7b8884', variable: 'GIT_CRED')]) {
+                        git url: '${DockerFile_Git_Repo}', branch: '${Branch_name}', credentialsId: 'GHE-token'
+                        sh "cat $GIT_CRED > ${DockerFile_Folder}/git-credentials"    
+                        sh '''#!/busybox/sh
+                         /kaniko/executor --context ${DockerFile_Folder} --dockerfile ${DockerFile_Folder}/${DockerFile_Name} --destination artifactory.vodafone.com/docker-vfgroup-oneplatform-local/${IMAGE_NAME}:${IMAGE_TAG} 
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
