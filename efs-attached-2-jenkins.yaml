@@ -148,26 +148,6 @@ metadata:
           f:readyReplicas: {}
           f:replicas: {}
           f:updatedReplicas: {}
-  selfLink: /apis/apps/v1/namespaces/lens-metrics/deployments/efs-provisioner
-status:
-  observedGeneration: 3
-  replicas: 1
-  updatedReplicas: 1
-  readyReplicas: 1
-  availableReplicas: 1
-  conditions:
-    - type: Progressing
-      status: 'True'
-      lastUpdateTime: '2022-11-25T12:04:38Z'
-      lastTransitionTime: '2022-01-07T13:03:52Z'
-      reason: NewReplicaSetAvailable
-      message: ReplicaSet "efs-provisioner-cc5dd79c7" has successfully progressed.
-    - type: Available
-      status: 'True'
-      lastUpdateTime: '2022-11-29T19:40:46Z'
-      lastTransitionTime: '2022-11-29T19:40:46Z'
-      reason: MinimumReplicasAvailable
-      message: Deployment has minimum availability.
 spec:
   replicas: 1
   selector:
@@ -182,7 +162,7 @@ spec:
       volumes:
         - name: pv-volume
           nfs:
-            server: fs-0fd12c6b0ae6009d6.efs.eu-west-1.amazonaws.com
+            server: fs-0fd12c6b0ae6009d6.efs.eu-west-1.amazonaws.com #arn of EFS 
             path: /
       containers:
         - name: efs-provisioner
