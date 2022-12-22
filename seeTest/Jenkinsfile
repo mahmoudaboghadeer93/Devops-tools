@@ -1,0 +1,171 @@
+@Library('oneplatform-shared-libraries') _
+pipeline {
+    agent {
+        kubernetes {
+            instanceCap 4
+            defaultContainer  "appium-slave"
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              name: appium-slave
+            spec:
+              containers:
+                - name: appium-slave
+                  image: artifactory.vodafone.com/docker-vfgroup-oneplatform-local/android-slave:80
+                  ports:
+                    - containerPort: 22
+                      protocol: TCP
+                  resources:
+                    limits:
+                      cpu: 1000m
+                      memory: 2Gi
+                    requests:
+                      cpu: 1000m
+                      memory: 2Gi
+              imagePullSecrets:
+                 - name: jfrog  
+            '''
+        }
+    }
+    tools {
+        maven 'maven2.8.6'
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 2, unit: 'HOURS')
+    }    
+    parameters {
+        choice(choices: ['iOS','Android','androidreact','iosreact'], description: 'Select Platform', name: 'Platform')
+    }
+    environment {
+        applitoolsKey = credentials('applitoolsKey')
+        AccessKey = credentials('accessKey')
+    }
+    stages {
+        stage('Parameters') {
+            steps {
+                script {
+                PROJECT_LIST = "'";
+                PROJECT_LIST += mva10ProjectList().join("', '");
+                PROJECT_LIST += "'";
+                properties([
+                        parameters([
+                            [$class: 'ChoiceParameter',
+                              choiceType: 'PT_SINGLE_SELECT',
+                              description: 'Specify platform',
+                              name: 'PLATFORM',
+                              script: [
+                                  $class: 'GroovyScript',
+                                  fallbackScript: [
+                                      classpath: [],
+                                      sandbox: false,
+                                      script:
+                                          "return['Could not get platforms']"
+                                  ],
+                                  script: [
+                                      classpath: [],
+                                      sandbox: false,
+                                      script:
+                                          "return['Android','iOS','React-Native']"
+                                      ]
+                              ]
+                            ],
+                            [$class: 'CascadeChoiceParameter',
+                              choiceType: 'PT_SINGLE_SELECT',
+                              description: 'Specify release group',
+                              name: 'REACT_PLATFORM',
+                              referencedParameters: 'PLATFORM',
+                              script: [
+                                  $class: 'GroovyScript',
+                                  fallbackScript: [
+                                      classpath: [],
+                                      sandbox: false,
+                                      script:
+                                          "return['Could not get react platform']"
+                                  ],
+                                  script: [
+                                      classpath: [],
+                                      sandbox: false,
+                                      script: """
+                                              if (PLATFORM.equals("React-Native")){
+                                                return['iOS', 'Android']
+                                              } else {
+                                                  return['None']
+                                              }
+                                              """
+                                  ]
+                              ]
+                            ],
+                            [$class: 'ChoiceParameter',
+                              choiceType: 'PT_SINGLE_SELECT',
+                              description: 'Specify project',
+                              name: 'PROJECT',
+                              script: [
+                                  $class: 'GroovyScript',
+                                  fallbackScript: [
+                                      classpath: [],
+                                      sandbox: false,
+                                      script:
+                                          "return['Could not get projects']"
+                                  ],
+                                  script: [
+                                      classpath: [],
+                                      sandbox: false,
+                                      script:
+                                          "return['MVA10-Onboarding']"
+                                      ]
+                              ]
+                            ]
+                        ])
+                    ])
+                }
+            }
+        }
+        stage('Copy Artifact') {
+            steps {
+                script {
+                    def projectName = "${params.PLATFORM}-${params.PROJECT}/test"
+                    env.MOBILE_PLATFORM = ("${params.PLATFORM}" == "React-Native") ? "${params.REACT_PLATFORM}React" : "${params.PLATFORM}"
+                    echo "MOBILE_PLATFORM: ${env.MOBILE_PLATFORM}"
+                    def manualTrigger = true
+                    currentBuild.upstreamBuilds?.each { b ->
+                    echo "Upstream build: ${b.getFullDisplayName()}"
+                    manualTrigger = false
+                    }
+                    try {
+                        copyArtifacts fingerprintArtifacts: true,
+                            flatten: true,
+                            projectName: projectName,
+                            selector: (manualTrigger == true)? lastWithArtifacts(): upstream(),
+                            target: "upload"
+                    } catch(Exception e) {
+                        echo "Pipeline aborted due to no artifact available to copy from " + projectName
+                        currentBuild.result = 'FAILURE'
+                        error "Copy Artifact failed"
+                    }
+                }
+            }
+        }
+        stage ('Upload') {
+            steps {
+                script{ 
+                sh "pip3 install requests"
+                sh "python3 seetest_upload.py"
+                }
+            }
+        }        
+        stage ('Test') {
+            steps {
+                  sh "mvn test -Dcucumber.options='src/test/java/RunnerTest.java'"
+            }
+        }
+        stage ("Report") {
+            steps {
+                script {
+                  cucumber buildStatus: 'SUCCESS', fileIncludePattern: 'cucumber.json', jsonReportDirectory: 'target/cucumber-reports/', reportTitle: "${env.MOBILE_PLATFORM}"
+                }
+            }
+        }
+    }
+}
