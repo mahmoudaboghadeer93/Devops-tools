@@ -7,7 +7,7 @@ spec:
     storage: 5Gi
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: 'fs-0030c964ba1e50419'
+    volumeHandle: ${efs-volume-id}
   accessModes:
     - ReadWriteMany
   claimRef:
