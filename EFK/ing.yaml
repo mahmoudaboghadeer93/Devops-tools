@@ -9,7 +9,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
 spec:
   rules:
-    - host: kibana.promize.io
+    - host: ${HOS-dns-name}
       http:
         paths:
           - path: /*
