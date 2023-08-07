@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kibana
+  namespace: logging
+spec:
+  ports:
+    - protocol: TCP
+      port: 5601
+      targetPort: 5601
+  selector:
+    app: kibana
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
