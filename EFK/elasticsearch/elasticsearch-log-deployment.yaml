@@ -19,7 +19,7 @@ spec:
             claimName: efs-elasticsearch-pvc-shared-log
       containers:
         - name: elasticsearch
-          image: 'docker.elastic.co/elasticsearch/elasticsearch:8.9.0'
+          image: 'docker.elastic.co/elasticsearch/elasticsearch:8.8.0'
           ports:
             - containerPort: 9200
               protocol: TCP
@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           env:
             - name: xpack.security.enabled
-              value: 'false'
+              value: 'true'
             - name: ES_JAVA_OPTS
               value: '-Xms256m -Xmx490m'
             - name: TZ
