@@ -1,6 +1,6 @@
-# adding user access to k8s cluster using Service account Role ,Role Binding
+# adding user access to k8s cluster using Service account Role and Role Binding
 
-:one: First create namespace as "users" to centralize all users or Service Accounts
+:one: First create namespace as "users" to centralize all users or Service Accounts.
 :two: Create secret for this service account to get Token , ca.crt for service account.
 :three: Create Role inside namespace you want user to have access to it with privelages you want to give it to him.
 :four: Create Role-binding in same namespace of role to bind ServiceAccount with Role.
