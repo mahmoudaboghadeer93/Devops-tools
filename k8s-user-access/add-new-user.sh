@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cluster_name=promize-cluster
-context_name=promize-context
-user_name=admin-user
-secret_name=admin-token
+cluster_name=${cluster-name}
+context_name=${cluster-context}
+user_name=${new-user}   
+secret_name=${secretName-for-serviceAcoount}
 
 #name=$(kubectl get secrets --namespace=users -o json | jq -r '.items[] | select(.metadata.name | test("${user_name}-reader-token")).metadata.name')
 
