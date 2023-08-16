@@ -534,7 +534,7 @@ spec:
     storage: 5Gi
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-03a9f1aa5640a0a3f
+    volumeHandle: fs-***************
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
