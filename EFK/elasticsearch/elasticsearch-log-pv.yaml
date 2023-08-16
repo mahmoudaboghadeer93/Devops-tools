@@ -10,12 +10,6 @@ spec:
     volumeHandle: ${efs-volume-id}
   accessModes:
     - ReadWriteMany
-  claimRef:
-    kind: PersistentVolumeClaim
-    namespace: logging
-    name: efs-elasticsearch-pvc-shared-log
-    apiVersion: v1
-    resourceVersion: '52406079'
   persistentVolumeReclaimPolicy: Retain
   storageClassName: efs-sc-shared-log
   volumeMode: Filesystem
