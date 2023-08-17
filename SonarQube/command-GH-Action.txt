@@ -1,0 +1,36 @@
+ - name: Install SonarQube Scanner
+      run: |
+        curl -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip -o sonar-scanner.zip
+        unzip sonar-scanner.zip
+        rm sonar-scanner.zip
+        mv sonar-scanner-* sonar-scanner
+        sudo mv sonar-scanner /opt/
+        sudo ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
+
+    - name: Add SonarQube Scanner to PATH
+      run: export PATH="$PATH:/opt/sonar-scanner/bin"
+        
+    - name: Run SonarQube analysis
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}  # Set the secret in your repository
+        SONARQUBE_SERVER_URL: ${{ secrets.SONARQUBE_HOST }}
+      run: |
+        # Run SonarQube analysis with sonar-scanner
+        sonar-scanner \
+          -Dsonar.host.url=$SONARQUBE_SERVER_URL \
+          -Dsonar.login=$SONAR_TOKEN \
+          -Dsonar.projectKey=<projectKey> \
+          -Dsonar.projectName=<projectKey> \
+          -Dsonar.sources=lib \
+          -Dsonar.flutter.coverage.reportPaths=coverage/lcov.info
+          
+        # Get the analysis status from SonarQube server
+        SONAR_STATUS=$(curl -s -u "$SONAR_TOKEN:" "$SONARQUBE_SERVER_URL/api/qualitygates/project_status?projectKey=<projectKey>")
+        
+        # Parse the JSON response to determine if analysis passed or failed
+        if echo "$SONAR_STATUS" | grep -q '"status":"ERROR"'; then
+          echo "SonarQube analysis failed."
+          #exit 1  # Indicate a failure in the GitHub Action
+        else
+          echo "SonarQube analysis passed."
+        fi         
