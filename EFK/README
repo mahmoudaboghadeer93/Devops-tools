@@ -1,6 +1,6 @@
 Elastic with Kibana , Fluentbit 
 Version 8.8.0
-
+Create user for fluentbit_systemwith name "fluentbit_system" , give it access with editor ,supeuser
 IF you faced this issue :
 Unable to attach or mount volumes: unmounted volumes=[efs-elasticsearch-volume-shared-log], unattached volumes=[kube-api-access-** efs-elasticsearch-volume-shared-log]: timed out waiting for the condition
 Please check the SG of attached EFS Volume in AWS
