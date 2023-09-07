@@ -17,9 +17,20 @@ spec:
         - name: efs-elasticsearch-volume-shared-log
           persistentVolumeClaim:
             claimName: efs-elasticsearch-pvc-shared-log
+      initContainers:
+        - name: fix-data-dir-ownership
+          image: busybox:1.28
+          command:
+            - chown
+            - '-R'
+            - '1000:1000'
+            - /usr/share/elasticsearch/data
+          volumeMounts:
+            - name: efs-elasticsearch-volume-shared-log
+              mountPath: /usr/share/elasticsearch/data            
       containers:
         - name: elasticsearch
-          image: 'docker.elastic.co/elasticsearch/elasticsearch:8.8.0'
+          image: 'docker.elastic.co/elasticsearch/elasticsearch:8.9.0'
           ports:
             - containerPort: 9200
               protocol: TCP
@@ -36,10 +47,14 @@ spec:
               value: single-node
           resources:
             limits:
-              memory: 1Gi
+              cpu: '2'
+              memory: 2Gi
+            requests:
+              cpu: '1'
+              memory: 2Gi
           volumeMounts:
             - name: efs-elasticsearch-volume-shared-log
-              mountPath: /var/lib/elasticsearch/data
+              mountPath: /usr/share/elasticsearch/data
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
