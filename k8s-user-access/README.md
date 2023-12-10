@@ -11,29 +11,24 @@ Follow these steps to grant user access to a Kubernetes (k8s) cluster using Serv
 2. **Create Secret:** Generate a secret for the service account to obtain the Token and ca.crt required for authentication.
 
     ```bash
-    kubectl create secret generic <SECRET_NAME> \
-      --namespace=users \
-      --from-file=token=<PATH_TO_TOKEN_FILE> \
-      --from-file=ca.crt=<PATH_TO_CA_FILE>
+    kubectl apply -f secret.yaml
     ```
-
-    Replace `<SECRET_NAME>`, `<PATH_TO_TOKEN_FILE>`, and `<PATH_TO_CA_FILE>` with your preferred secret name and file paths.
 
 3. **Create Role:** Define a Role inside the namespace where you want the user to have access. Specify the privileges you want to grant.
 
     ```bash
-    kubectl apply -f role-definition.yaml
+    kubectl apply -f role.yaml
     ```
 
-    Customize the `role-definition.yaml` file to specify the desired permissions.
+    Customize the `role.yaml` file to specify the desired permissions ,above one it is just example.
 
 4. **Create Role Binding:** Establish a Role Binding in the same namespace as the role to bind the Service Account with the Role.
 
     ```bash
-    kubectl apply -f role-binding.yaml
+    kubectl apply -f role-bind.yaml
     ```
 
-    Adjust the `role-binding.yaml` file to reference the previously created role.
+    Adjust the `role-bind.yaml` file to reference the previously created role.
 
 5. **Run Script:** Execute the `add-new-user.sh` script after customizing environment variables. This script generates a kube-config file that users can use to access the Kubernetes cluster.
 
