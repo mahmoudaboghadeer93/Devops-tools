@@ -9,7 +9,7 @@
  ```
  helm repo add bitnami https://charts.bitnami.com/bitnami
 
- helm install staging bitnami/redis --version 16.13.2 -n redisdb --set architecture="standalone" --set auth.enabled=false
+ helm install redis-staging bitnami/redis --version 16.13.2 -n redis-namespace --set architecture="standalone" --set auth.enabled=false
 
  ```
 
