@@ -1,0 +1,27 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: crondeploy
+  namespace: staging
+rules:
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - ''
+    resources:
+      - pods
+  - verbs:
+      - get
+      - list
+      - patch
+      - update
+      - delete
+      - create
+    apiGroups:
+      - extensions
+      - apps
+    resources:
+      - deployments
+      - deployments/scale
