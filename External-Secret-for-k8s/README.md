@@ -38,17 +38,11 @@ helm install external-secrets \
 }
 ```
 2-) Create IAM Role (*External-Secret-Role*) ,attache previous IAM Policy to it and use this Role in Service Account.
-3-) Create K8s Service Account 
+- Create Service Account IAMRole "[REF](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)."
 ```shell
- apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: secret-manager-sa
-  namespace: external-secrets
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_Account_ID}:role/External-Secret-Role
+   eksctl create iamserviceaccount --name secret-manager-sa --namespace external-secrets --cluster ${Cluster_Name} --profile ${AWS_profile_name} --region ${Region_name} --role-name External-Secret-Role \
+       --attach-policy-arn arn:aws:iam::${Account_ID}:policy/External-Secret-Policy --approve
 ```
-
 
 ***Create ClusterSecretStore***
    **Note** we create Cluster Secret Store because we want it to have access on all namespaces
