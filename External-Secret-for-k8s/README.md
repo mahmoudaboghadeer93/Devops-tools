@@ -37,7 +37,7 @@ helm install external-secrets \
     ]
 }
 ```
-2-) Create IAM Role (*External-Secret-Role*) ,attache previous IAM Policy to it and use this Role in Service Account.
+2-) Create *IAMRole Service Account* ,attache previous IAM Policy to it.
 - Create Service Account IAMRole "[REF](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)."
 ```shell
    eksctl create iamserviceaccount --name secret-manager-sa --namespace external-secrets --cluster ${Cluster_Name} --profile ${AWS_profile_name} --region ${Region_name} --role-name External-Secret-Role \
