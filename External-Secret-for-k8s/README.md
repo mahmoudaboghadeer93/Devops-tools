@@ -31,7 +31,7 @@ helm install external-secrets \
                 "secretsmanager:ListSecretVersionIds"
             ],
             "Resource": [
-                "arn:aws:secretsmanager:eu-central-1:844186437336:secret:*"
+                "arn:aws:secretsmanager:eu-central-1:${AWS_Account_ID}:secret:*"
             ]
         }
     ]
