@@ -1,5 +1,6 @@
 ***External Secrets***
 External secret management for Kubernetes
+
 ****Installing with Helm****
 The default install options will automatically install and manage the CRDs as part of your helm release. If you do not want the CRDs to be automatically upgraded and managed, you must set the installCRDs option to false. (e.g. --set installCRDS=false)
 
