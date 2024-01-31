@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"    
+  name: app-ingrees
+  namespace: ${NS_of_app}
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: auth.xx.com  #with same name like oauth2-proxy name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ${service_of_app}
+            port:
+              number: ${port_of_app}
