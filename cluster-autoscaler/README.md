@@ -61,5 +61,5 @@ kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-auto
 kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-autoscaler=us.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler:v1.28.2
 ```
 
-[***RFC***]([https://www.stacksimplify.com/aws-eks/aws-eks-kubernetes-autoscaling/learn-to-master-cluster-autoscaler-on-aws-eks/])
+[***RFC***](https://www.stacksimplify.com/aws-eks/aws-eks-kubernetes-autoscaling/learn-to-master-cluster-autoscaler-on-aws-eks/)
 
