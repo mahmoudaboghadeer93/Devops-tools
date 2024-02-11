@@ -343,6 +343,8 @@ metadata:
     app.kubernetes.io/version: 1.8.1
   name: ingress-nginx-controller
   namespace: ingress-nginx
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb  
 spec:
   externalTrafficPolicy: Local
   ipFamilies:
