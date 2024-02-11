@@ -124,6 +124,8 @@ metadata:
   namespace: kube-system
   labels:
     app: cluster-autoscaler
+  annotations:
+    cluster-autoscaler.kubernetes.io/safe-to-evict: 'false'    
 spec:
   replicas: 1
   selector:
@@ -157,11 +159,15 @@ spec:
               memory: 600Mi
           command:
             - ./cluster-autoscaler
-            - --v=4
-            - --stderrthreshold=info
-            - --cloud-provider=aws
-            - --skip-nodes-with-local-storage=false
-            - --expander=least-waste
+            - '--stderrthreshold=info'
+            - '--cloud-provider=aws'
+            - '--scan-interval=20s'
+            - '--scale-down-utilization-threshold=0.5'
+            - '--scale-down-unneeded-time=5m'
+            - '--skip-nodes-with-local-storage=false'
+            - '--expander=least-waste'
+            - '--balance-similar-node-groups'
+            - '--skip-nodes-with-system-pods=false'
             - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/<YOUR CLUSTER NAME>
           volumeMounts:
             - name: ssl-certs
