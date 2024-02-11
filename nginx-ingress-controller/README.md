@@ -12,9 +12,11 @@ helm show values ingress-nginx --repo https://kubernetes.github.io/ingress-nginx
 ```
 
 ***If you don't have Helm or if you prefer to use a YAML manifest, you can run the following command instead:***
+
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
 ```
 
-**RFC***
+***RFC***
+
  https://kubernetes.github.io/ingress-nginx/deploy/
