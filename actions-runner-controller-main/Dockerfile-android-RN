@@ -1,0 +1,100 @@
+# the base Image | OS 
+FROM ubuntu:22.04
+
+# set environment variables
+ENV ANDROID_HOME="/opt/cmdline-tools/latest/bin/"
+WORKDIR /root/
+# to run dpkg (behind other tools like Apt) without interactive dialogue
+ARG DEBIAN_FRONTEND=noninteractive
+# tools and packages versions
+ARG WM_VERSION=v2021.03.01.00
+ARG NPM_VERSION=7.10.0
+ARG GRADLE_VERSION=gradle-6.5
+ARG ANDROID_SDK_VERSION=commandlinetools-linux-7583922_latest
+ARG SDK_BUILD_TOOLS_VERSION_1=30.0.2
+ARG SDK_BUILD_TOOLS_VERSION_2=30.0.3
+ARG SKD_PLATFORMS_1=android-30
+ARG SKD_PLATFORMS_2=android-29
+ARG NODE_VERSION=16.0.0
+ARG JAVA_VERSION=openjdk-11-jdk
+ARG SONAR_SCANNER_VERSION=sonar-scanner-cli-3.2.0.1227-linux
+
+# update the package manager 
+RUN apt update -y && apt-get update -y && \
+    apt-get -y install curl unzip wget gh jq vim python3 nodejs && \
+    apt -y install hub openssh-server sudo python3-venv python3-pip npm ruby-full ghp-import ${JAVA_VERSION} && \
+    rm -rf /var/lib/apt/lists/*
+
+# install n & node
+RUN npm install -g n && \
+    n install ${NODE_VERSION}
+# install mkdocs-material
+RUN pip install mkdocs
+RUN pip install mkdocs-material 
+# install appcenter 2.10.6
+RUN npm install -g appcenter-cli
+# install github_changelog_generator
+RUN gem install github_changelog_generator
+# install watchman 
+RUN wget https://github.com/facebook/watchman/releases/download/$WM_VERSION/watchman-$WM_VERSION-linux.zip && \
+    unzip watchman-$WM_VERSION-linux.zip && \
+    cd watchman-$WM_VERSION-linux && \
+    mkdir -p /usr/local/{bin,lib} /usr/local/var/run/watchman && \
+    cp bin/* /usr/local/bin && \
+    cp lib/* /usr/local/lib && \
+    chmod 755 /usr/local/bin/watchman && \
+    chmod 2777 /usr/local/var/run/watchman && \
+    cd .. && \
+    rm -fr watchman-$WM_VERSION-linux.zip watchman-$WM_VERSION-linux
+# install sonar scanner
+RUN mkdir /opt/sonarscanner && \
+    cd /opt/sonarscanner && \
+    wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/$SONAR_SCANNER_VERSION.zip && \
+    unzip $SONAR_SCANNER_VERSION.zip && \
+    rm $SONAR_SCANNER_VERSION.zip && \
+    chmod +x sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner && \
+    ln -s /opt/sonarscanner/sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner
+RUN cd /opt && wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip && \
+    unzip sonar-scanner-cli-4.7.0.2747-linux.zip && \
+    rm sonar-scanner-cli-4.7.0.2747-linux.zip && \
+    mv sonar-scanner-4.7.0.2747-linux sonar-scanner-4 && \
+    chmod 777 sonar-scanner-4/bin/sonar-scanner
+# install gradle 7.3.1
+RUN mkdir /opt/gradle && cd /opt/gradle && \
+    wget https://services.gradle.org/distributions/$GRADLE_VERSION-all.zip && \
+    unzip -d /opt/gradle $GRADLE_VERSION-all.zip && \
+    rm /opt/gradle/$GRADLE_VERSION-all.zip && \
+    ln -s /opt/gradle/${GRADLE_VERSION}/bin/gradle /usr/local/bin/gradle
+# install android-sdk
+WORKDIR /opt
+RUN wget https://dl.google.com/android/repository/$ANDROID_SDK_VERSION.zip
+RUN unzip ${ANDROID_SDK_VERSION}.zip && rm ${ANDROID_SDK_VERSION}.zip
+RUN cd cmdline-tools && mkdir latest && mv NOTICE.txt  bin  lib  source.properties latest && cd latest/bin/ && \
+    yes | ./sdkmanager --licenses --sdk_root=/opt/cmdline-tools/latest/bin  && \
+     ./sdkmanager --list  && \
+    yes | ./sdkmanager "tools" "platform-tools" && \
+    yes | ./sdkmanager "build-tools;${SDK_BUILD_TOOLS_VERSION_1}" "build-tools;${SDK_BUILD_TOOLS_VERSION_2}" && \
+    yes | ./sdkmanager "platforms;${SKD_PLATFORMS_1}" "platforms;${SKD_PLATFORMS_2}" 
+RUN chmod 777 /opt/cmdline-tools/latest/bin
+#######################
+RUN useradd -rm -d /home/jenkins -s /bin/bash -g root -G sudo -u 1000 jenkins
+RUN echo "jenkins:jenkins" | chpasswd && \
+    echo 'root:root' |chpasswd && \
+    echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+RUN mkdir -p /opt/sonar/sonar-scanner-3.1 && cp -R sonarscanner/sonar-scanner-3.2.0.1227-linux/* sonar/sonar-scanner-3.1/ && chmod 777 sonar/sonar-scanner-3.1/bin sonar/sonar-scanner-3.1/bin/* && rm -rf sonarscanner
+RUN chmod 777 /home/jenkins/
+#NPM
+RUN npm install -g npmrc && \
+    npm i -g penv && \
+    npm install -g yarn && \
+    npm install -g npm@${NPM_VERSION} 
+
+USER jenkins 
+COPY ./git-credentials /home/jenkins/.git-credentials
+RUN git config --global credential.helper store && \
+    git config --global --add safe.directory '*' && \
+    sudo service ssh start
+EXPOSE 22
+
+CMD ["sudo","/usr/sbin/sshd","-D"]
