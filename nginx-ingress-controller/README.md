@@ -29,3 +29,5 @@ kubectl apply -f nginx-all.yaml
 
 [***RFC***](https://kubernetes.github.io/ingress-nginx/deploy/)
 
+[***Helm chart***](https://artifacthub.io/packages/helm/bitnami/nginx-ingress-controller)
+
