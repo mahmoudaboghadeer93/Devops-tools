@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openroute-eg
+  namespace: default
+  labels:
+    app: openroute-eg
+    country: egypt
+    k8slens-edit-resource-version: v1
+    svc: openroute
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openroute-eg
+      country: egypt
+      svc: openroute
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: openroute-eg
+        country: egypt
+        svc: openroute
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: ors-config
+            defaultMode: 420
+        - name: graphs-volume
+          emptyDir: {}
+        - name: cache-volume
+          emptyDir: {}
+      containers:
+        - name: openroute-eg
+          image: >-
+            063605733848.dkr.ecr.eu-west-1.amazonaws.com/openroute-eg:5ca3142-latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 9001
+              protocol: TCP
+          env:
+            - name: JAVA_OPTS
+              value: >-
+                -Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75
+                -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseG1GC
+                -XX:+ScavengeBeforeFullGC -XX:ParallelGCThreads=4 -Xms1g -Xmx2g
+            - name: CATALINA_OPTS
+              value: >-
+                -Dcom.sun.management.jmxremote
+                -Dcom.sun.management.jmxremote.port=9001
+                -Dcom.sun.management.jmxremote.rmi.port=9001
+                -Dcom.sun.management.jmxremote.authenticate=false
+                -Dcom.sun.management.jmxremote.ssl=false
+                -Djava.rmi.server.hostname=localhost
+            - name: ORS_CONFIG
+              value: /home/ors/ors-conf/ors-config.json
+            - name: BUILD_GRAPHS
+              value: 'True'
+          resources: {}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /home/ors/ors-conf/ors-config.json
+              subPath: ors-config.json
+            - name: graphs-volume
+              mountPath: /home/ors/ors-core/data/graphs
+            - name: cache-volume
+              mountPath: /home/ors/ors-core/data/elevation_cache
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        dedicate: openroute
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 70
