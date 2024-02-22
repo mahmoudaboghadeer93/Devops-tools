@@ -1,0 +1,59 @@
+name: Build 
+on:
+  workflow_dispatch:
+
+jobs:
+  OSR-build:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REGISTRY_URL: xxxxxxxx.dkr.ecr.eu-west-1.amazonaws.com
+      OSR_EG_NAME: openroute-eg
+      OSR_GCC_NAME: openroute-gcc
+      AWS_DEFAULT_REGION: eu-west-1
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      IS_PRODUCTION: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TRELLA_BOT_USER_TOKEN }}
+
+      - name: Install aws-cli
+        uses: chrislennon/action-aws-cli@v1.1
+
+      - name: Get ECR Authorization Token
+        run: |
+          $(aws ecr get-login --no-include-email  --region $AWS_DEFAULT_REGION )
+
+      - name: Build & Push OSR image     
+        run: |
+          ## Egypt 
+          docker build --build-arg=COUNTRY=egypt --build-arg=CONTINENT=africa \
+          --tag $REGISTRY_URL/$OSR_EG_NAME:${GITHUB_SHA::7}-latest \
+          base-images/openroute
+          docker push $REGISTRY_URL/$OSR_EG_NAME:${GITHUB_SHA::7}-latest
+        
+          ## Gcc States
+          docker build --build-arg=COUNTRY=gcc-states --build-arg=CONTINENT=asia \
+          --tag $REGISTRY_URL/$OSR_GCC_NAME:${GITHUB_SHA::7}-latest \
+          base-images/openroute
+          docker push $REGISTRY_URL/$OSR_GCC_NAME:${GITHUB_SHA::7}-latest
+
+      
+      # - name: (Production) Set EKS_CLUSTER_NAME
+      #   run: |
+      #     echo "EKS_CLUSTER_NAME=production" >> $GITHUB_ENV
+      #     echo "EKS_NAMESPACE=default" >> $GITHUB_ENV
+      #     echo "EKS_GROUP=production" >> $GITHUB_ENV
+      #   if: github.ref == 'refs/heads/main'
+
+      # - name: (Staging) Set EKS_CLUSTER_NAME
+      #   run: |
+      #     echo "EKS_CLUSTER_NAME=staging" >> $GITHUB_ENV
+      #     echo "EKS_NAMESPACE=staging" >> $GITHUB_ENV
+      #     echo "EKS_GROUP=staging" >> $GITHUB_ENV
+      #   if: github.ref == 'refs/heads/dev'
