@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: traccar.trellaservices.com
+  - host: traccar.xxxx.com
     http:
       paths:     
           - path: /
@@ -15,14 +15,4 @@ spec:
               service:
                 name: traccar
                 port:
-                  number: 80
-  - host: traccar-device.trellaservices.com
-    http:
-      paths:     
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: traccar
-                port:
-                  number: 5023                                   
+                  number: 80                                   
