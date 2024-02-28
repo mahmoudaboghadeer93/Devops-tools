@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traccar
+  namespace: default
+data:
+  traccar-config: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+
+    <!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
+
+    <properties>
+
+        <entry key='config.default'>./conf/default.xml</entry>
+        <entry key='config.useEnvironmentVariables'>true</entry>
+        <entry key='filter.enable'>false</entry>
+        <entry key='logger.enable'>true</entry>
+        <entry key='logger.level'>info</entry>
+        <entry key='logger.file'>/dev/stdout</entry>
+        <entry key='logger.rotate'>false</entry>    
+
+        <!--
+
+        This is the main configuration file. All your configuration parameters should be placed in this file.
+
+        Default configuration parameters are located in the "default.xml" file. You should not modify it to avoid issues
+        with upgrading to a new version. Parameters in the main config file override values in the default file. Do not
+        remove "config.default" parameter from this file unless you know what you are doing.
+
+        For list of available parameters see following page: https://www.traccar.org/configuration-file/
+
+        -->
+        
+          <entry key='database.driver'>org.postgresql.Driver</entry>
+          <entry key='database.url'>jdbc:postgresql://xxxxx-xxxxxx.xxxxx.eu-west-1.rds.amazonaws.com:5432/traccar</entry>
+          <entry key='database.user'>xxxxxxxxxxx</entry>
+          <entry key='database.password'>xxxxxxxxx</entry>
+          
+          ####your customized configs
+          <entry key='forward.enable'>true</entry>
+          <entry key='forward.url'>https://xxxxxx.xxxxxx.com/api/GpsProviders/ProcessTraccarUpdates</entry>
+          <entry key='forward.type'>json</entry>       
+
+    </properties>

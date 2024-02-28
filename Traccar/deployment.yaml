@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traccar
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traccar
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: traccar
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: 'true'
+        reloader.stakater.com/auto: 'true'
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: traccar
+            defaultMode: 420
+      containers:
+        - name: traccar
+          image: traccar/traccar:5.10
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+            - containerPort: 5055
+              protocol: TCP
+            - containerPort: 5023
+              protocol: TCP              
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2000Mi
+            requests:
+              cpu: 700m
+              memory: 1500Mi
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/traccar/conf/traccar.xml
+              subPath: traccar-config
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        role: Tools-NG
+      securityContext: {}
+      schedulerName: default-scheduler
+      tolerations:
+        - key: ENV
+          operator: Equal
+          value: TOOLS
+          effect: NoSchedule
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
