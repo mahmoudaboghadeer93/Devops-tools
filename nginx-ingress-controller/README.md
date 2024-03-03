@@ -38,6 +38,17 @@ kubectl apply -f nginx-all.yaml
       
 <img width="301" alt="image" src="https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/a941fe46-a614-4ba8-a6bf-a02a3656c05f">
 
+
+**The Nginx ingress controller can export Prometheus metrics.**
+
+```shell
+helm upgrade --install ingress-nginx ingress-nginx \                                       
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-type"="nlb" --set controller.metrics.enabled=true
+```
+
+You can add Prometheus annotations to the metrics service using controller.metrics.service.annotations. Alternatively, if you use the Prometheus Operator, you can enable ServiceMonitor creation using controller.metrics.serviceMonitor.enabled.
+
 [***RFC***](https://kubernetes.github.io/ingress-nginx/deploy/)
 
 [***Helm chart***](https://artifacthub.io/packages/helm/bitnami/nginx-ingress-controller)
