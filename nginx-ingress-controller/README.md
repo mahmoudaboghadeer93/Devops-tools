@@ -31,7 +31,9 @@ kubectl apply -f nginx-all.yaml
 
 ***1-) also if you don't use Cloudfront in front of ELB ,you use ACM on AWS ELB side so***
  - change the following values inside ingress-nginx-controller service ([***Issue***](https://github.com/kubernetes/ingress-nginx/issues/5206)
+   
    **appProtocol: from https to http**
+   
    **targetPort: from https to http**
       
 <img width="301" alt="image" src="https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/a941fe46-a614-4ba8-a6bf-a02a3656c05f">
