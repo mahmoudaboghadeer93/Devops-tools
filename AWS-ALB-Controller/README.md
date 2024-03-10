@@ -1,4 +1,4 @@
-**Deploy AWS Load Balancer Controller AWS EKS.** 
+# Deploy AWS Load Balancer Controller AWS EKS.
 
 Application Load Balancer (ALB) within AWS EKS.
 Buckle up as i introduce you to the incredible AWS Load Balancer Controller, a Kubernetes controller specifically designed to effortlessly handle Elastic Load Balancers for your Kubernetes cluster.
@@ -70,8 +70,11 @@ you can manually apply the IAM policies from the following URL: https://raw.gith
     kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"
    ```
 3. Install the AWS Load Balancer controller, if using iamserviceaccount (as our case here):
-    # NOTE: The clusterName value must be set either via the values.yaml or the Helm command line. The <k8s-cluster-name> in the command
-    # below should be replaced with name of your k8s cluster before running it.
+   
+    **NOTE:**
+   
+      The clusterName value must be set either via the values.yaml or the Helm command line. The <k8s-cluster-name> in the command
+      below should be replaced with name of your k8s cluster before running it.
    
    ```bash
       helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name> --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
