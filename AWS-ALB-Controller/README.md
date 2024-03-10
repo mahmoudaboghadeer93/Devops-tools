@@ -1,4 +1,4 @@
-# Deploy AWS Load Balancer Controller AWS EKS.
+# Deploy AWS Load Balancer Controller on AWS EKS.
 
 Application Load Balancer (ALB) within AWS EKS.
 Buckle up as i introduce you to the incredible AWS Load Balancer Controller, a Kubernetes controller specifically designed to effortlessly handle Elastic Load Balancers for your Kubernetes cluster.
