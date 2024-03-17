@@ -6,6 +6,7 @@ this for default ELB type (classic).
   --namespace ingress-nginx --create-namespace
 ```
 **OR**
+
 this for NLB type 
 ```shell
 helm upgrade --install ingress-nginx ingress-nginx \                                       
