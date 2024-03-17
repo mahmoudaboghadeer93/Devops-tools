@@ -17,6 +17,7 @@ Option 1: Using IAM roles for ServiceAccounts (*recommended*):
 1. Create an IAM OIDC provider for your EKS cluster:
    ```bash
       eksctl utils associate-iam-oidc-provider \
+      --profile <profile-name> \
       --region <region-code> \
       --cluster <your-cluster-name> \
       --approve
@@ -43,6 +44,8 @@ aws iam create-policy \
 ```bash
 eksctl create iamserviceaccount \
     --cluster=<your-cluster-name> \
+    --profile <profile-name> \
+    --region <region-code> \
     --namespace=kube-system \
     --name=aws-load-balancer-controller \
     --attach-policy-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
