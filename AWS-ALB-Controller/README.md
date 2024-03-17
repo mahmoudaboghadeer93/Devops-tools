@@ -33,6 +33,7 @@ Option 1: Using IAM roles for ServiceAccounts (*recommended*):
 
 ```bash
 aws iam create-policy \
+    --profile <profile-name> \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://iam-policy.json
 ```
