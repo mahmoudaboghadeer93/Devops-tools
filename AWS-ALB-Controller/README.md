@@ -71,7 +71,7 @@ you can manually apply the IAM policies from the following URL: https://raw.gith
 2. Install the TargetGroupBinding CRDs:
 
    ```bash
-    kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"
+    kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds?ref=master"
    ```
 3. Install the AWS Load Balancer controller, if using iamserviceaccount (as our case here):
    
