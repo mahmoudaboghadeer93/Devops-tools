@@ -92,6 +92,7 @@ you can manually apply the IAM policies from the following URL: https://raw.gith
      helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name>
   ```
 
+[***REF***](https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller)
 
 [***Helm chart***](https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller)
 
