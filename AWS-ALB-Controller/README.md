@@ -164,7 +164,7 @@ The controller will attempt to discover TLS certificates from the tls field in I
 | `nginx.ingress.kubernetes.io/proxy-connect-timeout`    | `alb.ingress.kubernetes.io/backend-connection-idle-timeout` | Sets idle timeout for connections between ALB and backend servers.                                  |
 | `nginx.ingress.kubernetes.io/proxy-read-timeout`       | `alb.ingress.kubernetes.io/backend-read-timeout`            | Sets maximum time ALB waits for response from backend server.                                        |
 | `nginx.ingress.kubernetes.io/proxy-request-buffering`  | N/A                                                          | No direct equivalent. ALB does not buffer entire request bodies by default.                          |
-| `nginx.ingress.kubernetes.io/proxy-send-timeout`       | `alb.ingress.kubernetes.io/backend-timeout`                | Sets maximum time ALB waits for backend ser
+| `nginx.ingress.kubernetes.io/proxy-send-timeout`       | `alb.ingress.kubernetes.io/backend-timeout`                | Sets maximum time ALB waits for backend server to respond to request. 
 
 
 
