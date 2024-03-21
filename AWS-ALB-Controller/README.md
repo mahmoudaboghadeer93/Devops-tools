@@ -152,6 +152,19 @@ The controller will attempt to discover TLS certificates from the tls field in I
            servicePort: 80
   ```
 
+
+| NGINX Ingress Annotation                               | ALB Ingress Annotation                                      | Description                                                                                         |
+|--------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `nginx.ingress.kubernetes.io/configuration-snippet`    | N/A                                                          | No direct equivalent. Manual configuration may be required.                                         |
+| `nginx.ingress.kubernetes.io/force-ssl-redirect`       | N/A                                                          | No direct equivalent. SSL redirection is managed differently in AWS ALB.                            |
+| `nginx.ingress.kubernetes.io/proxy-body-size`          | N/A                                                          | No direct equivalent. ALB has default maximum request size limit. Adjust application accordingly.    |
+| `nginx.ingress.kubernetes.io/proxy-connect-timeout`    | `alb.ingress.kubernetes.io/backend-connection-idle-timeout` | Sets idle timeout for connections between ALB and backend servers.                                  |
+| `nginx.ingress.kubernetes.io/proxy-read-timeout`       | `alb.ingress.kubernetes.io/backend-read-timeout`            | Sets maximum time ALB waits for response from backend server.                                        |
+| `nginx.ingress.kubernetes.io/proxy-request-buffering`  | N/A                                                          | No direct equivalent. ALB does not buffer entire request bodies by default.                          |
+| `nginx.ingress.kubernetes.io/proxy-send-timeout`       | `alb.ingress.kubernetes.io/backend-timeout`                | Sets maximum time ALB waits for backend ser
+
+
+
 [***Certificate Discovery REF***](https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller)
 
 [***REF***](https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller)
