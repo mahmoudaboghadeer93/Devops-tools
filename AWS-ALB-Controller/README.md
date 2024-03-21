@@ -92,6 +92,8 @@ you can manually apply the IAM policies from the following URL: https://raw.gith
      helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name>
   ```
 
+      🎉 We are done - now we should have AWS ALB Controller in K8s. 🎉
+
 
 
 ***Certificate Discovery***
