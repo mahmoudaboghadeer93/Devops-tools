@@ -92,6 +92,64 @@ you can manually apply the IAM policies from the following URL: https://raw.gith
      helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name>
   ```
 
+***Certificate Discovery***
+
+TLS certificates for ALB Listeners can be automatically discovered with hostnames from Ingress resources if the alb.ingress.kubernetes.io/certificate-arn annotation is not specified.
+
+The controller will attempt to discover TLS certificates from the tls field in Ingress and host field in Ingress rules.
+
+*Discover via Ingress tls*
+
+  *EX:*
+  
+  ```bash
+    apiVersion: extensions/v1beta1
+    kind: Ingress
+    metadata:
+    namespace: default
+    name: ingress
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    spec:
+      tls:
+      - hosts:
+        - www.example.com
+      rules:
+      - http:
+          paths:
+          - path: /users/*
+            backend:
+              serviceName: user-service
+              servicePort: 80
+  ```
+
+*Discover via Ingress rule host*
+
+  *EX:*
+  
+  ```bash
+     apiVersion: extensions/v1beta1
+     kind: Ingress
+     metadata:
+     namespace: default
+     name: ingress
+     annotations:
+       kubernetes.io/ingress.class: alb
+       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+     spec:
+     rules:
+     - host: dev.example.com
+       http:
+         paths:
+         - path: /users/*
+         backend:
+           serviceName: user-service
+           servicePort: 80
+  ```
+
+[***Certificate Discovery REF***](https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller)
+
 [***REF***](https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller)
 
 [***Helm chart***](https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller)
