@@ -92,6 +92,8 @@ you can manually apply the IAM policies from the following URL: https://raw.gith
      helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name>
   ```
 
+
+
 ***Certificate Discovery***
 
 TLS certificates for ALB Listeners can be automatically discovered with hostnames from Ingress resources if the alb.ingress.kubernetes.io/certificate-arn annotation is not specified.
