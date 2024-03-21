@@ -153,6 +153,9 @@ The controller will attempt to discover TLS certificates from the tls field in I
   ```
 
 
+**the table for the mappings between NGINX Ingress annotations and ALB Ingress annotations:**
+
+
 | NGINX Ingress Annotation                               | ALB Ingress Annotation                                      | Description                                                                                         |
 |--------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
 | `nginx.ingress.kubernetes.io/configuration-snippet`    | N/A                                                          | No direct equivalent. Manual configuration may be required.                                         |
@@ -162,6 +165,8 @@ The controller will attempt to discover TLS certificates from the tls field in I
 | `nginx.ingress.kubernetes.io/proxy-read-timeout`       | `alb.ingress.kubernetes.io/backend-read-timeout`            | Sets maximum time ALB waits for response from backend server.                                        |
 | `nginx.ingress.kubernetes.io/proxy-request-buffering`  | N/A                                                          | No direct equivalent. ALB does not buffer entire request bodies by default.                          |
 | `nginx.ingress.kubernetes.io/proxy-send-timeout`       | `alb.ingress.kubernetes.io/backend-timeout`                | Sets maximum time ALB waits for backend ser
+
+
 
 
 
