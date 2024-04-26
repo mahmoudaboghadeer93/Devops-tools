@@ -10,7 +10,9 @@ This guide outlines the steps to set up auto-scaling for your AWS Lambda functio
 ## Steps
 
 1. **Create Lambda Functions**:
-   - Create two Lambda functions, one for scaling up and one for scaling down.
+   - Create IAM Policy (lambda-autoscaling-policy) with Full access to "EC2 Auto Scaling".
+   - Create AWS IAM Role (lambda-autoscaling-role) attach above IAM Policy to it.
+   - Create two Lambda functions, one for scaling up and one for scaling down and attache above IAM Role to both of them.
    - You can use the provided example Lambda function code in Python as a starting point.
 
 2. **Create Incoming Webhook in Slack**:
