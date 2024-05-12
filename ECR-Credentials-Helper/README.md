@@ -2,11 +2,11 @@ Keeping AWS Registry pull credentials fresh in Kubernetes
 
 1-) Create K8s secret that contain all envs 
 ```shell
-            - AWS_ACCESS_KEY_ID: ###################
-            - AWS_ACCOUNT: ###################
-            - AWS_REGION: ###################
-            - AWS_SECRET_ACCESS_KEY: ###################==
-            - DOCKER_SECRET_NAME: ###################==
+   - AWS_ACCESS_KEY_ID: ###################
+   - AWS_ACCOUNT: ###################
+   - AWS_REGION: ###################
+   - AWS_SECRET_ACCESS_KEY: ###################==
+   - DOCKER_SECRET_NAME: ###################==
 ```
 ```shell
 kubectl apply -f secret.yaml
