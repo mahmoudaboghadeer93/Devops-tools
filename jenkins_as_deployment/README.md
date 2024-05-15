@@ -64,11 +64,11 @@ password}" | base64 --decode);echo
 
       - use it to create jenkins credentials using add → jenkins → select kind as secret text → fill the details → Add.
 
-[      [![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/018e1934-c010-4063-82e0-13157f9585cd)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png)
+[      [![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/018e1934-c010-4063-82e0-13157f9585cd)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png)]
 
       - Use created credentials and click Test Connection.
 
-[     [ ![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/280b375a-86b3-483c-84bf-442a5798a23e)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds-test.png)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds-test.png)
+[     [ ![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/280b375a-86b3-483c-84bf-442a5798a23e)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds-test.png)]
 
       - Add jenkins service private URL in Jenkins URL and leave rest as default and click Save.
       
