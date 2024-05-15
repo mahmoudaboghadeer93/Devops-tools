@@ -4,15 +4,31 @@ kind: ClusterRole
 metadata:
   name: jenkins-admin
 rules:
-  - apiGroups: [""]
-    resources: ["*"]
-    verbs: ["*"]
+  - verbs:
+      - '*'
+    apiGroups:
+      - '*'
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    nonResourceURLs:
+      - '*'
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: jenkins-admin
   namespace: jenkins
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: jenkins-sa-secret
+  namespace: jenkins
+  annotations:
+    kubernetes.io/service-account.name: jenkins-admin
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
