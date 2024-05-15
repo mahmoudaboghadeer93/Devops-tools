@@ -1,4 +1,5 @@
 # Keeping AWS Registry pull credentials fresh in Kubernetes
+  - it's a k8s cronjob run every 10 min to renew the access to AWS ECR
 
 1️⃣ Create K8s secret that contain all envs 
 ```shell
