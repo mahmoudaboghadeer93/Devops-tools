@@ -46,7 +46,9 @@ password}" | base64 --decode);echo
       
       - Provide Cloud name as kubernetes and type as Kubernetes.
 
-      https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/image%20(1).png
+[      ![img (1)](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/b3bee7f2-d922-4665-8b43-ecb0867edb88)
+](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/image%20(1).png)
+
 
       - Click create and edit cloud details by expanding Kubernetes Cloud Details.
       
@@ -61,10 +63,12 @@ password}" | base64 --decode);echo
       - (Note: this step we can skip it if the jenkins in same k8s) Use token of secret for your jenkins service account(jenkins-admin) which created in above (step 4️⃣ for deploy Jenkins) and
 
       - use it to create jenkins credentials using add → jenkins → select kind as secret text → fill the details → Add.
-        https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png
+
+[      [![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/018e1934-c010-4063-82e0-13157f9585cd)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png)]
 
       - Use created credentials and click Test Connection.
-        https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds-test.png  
+
+[     [ ![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/280b375a-86b3-483c-84bf-442a5798a23e)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds-test.png)]
 
       - Add jenkins service private URL in Jenkins URL and leave rest as default and click Save.
       
@@ -83,4 +87,3 @@ For more detailed documentation, please refer to:
 "[efs-csi](https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)."
 "[deploying-jenkins-on-amazon-eks-with-amazon-efs](https://aws.amazon.com/blogs/storage/deploying-jenkins-on-amazon-eks-with-amazon-efs/)."
 "[deployment-with-efs](https://www.eksworkshop.com/docs/fundamentals/storage/efs/deployment-with-efs)."
-
