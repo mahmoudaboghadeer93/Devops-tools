@@ -39,8 +39,11 @@ password}" | base64 --decode);echo
 # Configure Jenkins to deploy apps on k8s
 
    1️⃣ Install kuberenetes cloud plugin , other needed plugins as here
+   
    2️⃣ Configure kuberenetes Cloud :
+   
       - Go to Manage Jenkins → Clouds → Add new cloud
+      
       - Provide Cloud name as kubernetes and type as Kubernetes.
 
       <img width="1334" alt="image" src="https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/4e4ad580-1c16-407e-8189-f2a57ffaa909">
