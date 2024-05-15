@@ -45,7 +45,8 @@ password}" | base64 --decode);echo
       - Go to Manage Jenkins → Clouds → Add new cloud
       
       - Provide Cloud name as kubernetes and type as Kubernetes.
-        https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/image%20(1).png
+
+      https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/image%20(1).png
 
       - Click create and edit cloud details by expanding Kubernetes Cloud Details.
       
