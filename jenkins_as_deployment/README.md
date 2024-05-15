@@ -46,7 +46,9 @@ password}" | base64 --decode);echo
       
       - Provide Cloud name as kubernetes and type as Kubernetes.
 
-      <img width="1334" alt="image" src="https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/4e4ad580-1c16-407e-8189-f2a57ffaa909">
+      ![image (1)](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/b3bee7f2-d922-4665-8b43-ecb0867edb88)
+
+
 
       - Click create and edit cloud details by expanding Kubernetes Cloud Details.
       
