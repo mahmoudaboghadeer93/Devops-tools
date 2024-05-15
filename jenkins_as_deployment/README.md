@@ -42,7 +42,7 @@ password}" | base64 --decode);echo
    
    2️⃣ Configure kuberenetes Cloud :
    
-      - Go to Manage Jenkins → Clouds → Add new cloud
+      * - Go to Manage Jenkins → Clouds → Add new cloud *
       
       - Provide Cloud name as kubernetes and type as Kubernetes.
 
