@@ -46,8 +46,8 @@ password}" | base64 --decode);echo
       
       - Provide Cloud name as kubernetes and type as Kubernetes.
 
-      ![img (1)](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/b3bee7f2-d922-4665-8b43-ecb0867edb88)
-
+[      ![img (1)](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/b3bee7f2-d922-4665-8b43-ecb0867edb88)
+](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/image%20(1).png)
 
 
       - Click create and edit cloud details by expanding Kubernetes Cloud Details.
