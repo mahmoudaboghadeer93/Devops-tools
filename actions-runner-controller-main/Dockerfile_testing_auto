@@ -1,0 +1,19 @@
+FROM summerwind/actions-runner-dind:ubuntu-22.04
+ENV MAVEN_HOME /opt/maven
+ENV PATH $PATH:$MAVEN_HOME/bin
+RUN sudo apt update -y \
+ && sudo apt upgrade -y \
+ && sudo apt install wget openjdk-11-jdk -y \
+ ###_Install nodejs_22_#####
+ && sudo apt install ca-certificates curl gnupg -y \
+ && sudo mkdir -p /etc/apt/keyrings \
+ && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+ && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+ && sudo apt update -y \
+ && sudo apt install nodejs -y \
+  ###_install mvaven_3.9.6_#####
+ && export VER="3.9.6" \
+ && sudo wget https://downloads.apache.org/maven/maven-3/$VER/binaries/apache-maven-$VER-bin.tar.gz \
+ && sudo tar xvf apache-maven-$VER-bin.tar.gz \
+ && sudo mv apache-maven-$VER /opt/maven \
+ && sudo rm -rf /var/lib/apt/lists/* 
