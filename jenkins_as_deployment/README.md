@@ -54,9 +54,9 @@ password}" | base64 --decode);echo
       
       - Add URL of the Kubernetes API server in Kubernetes URL and namespace in kubernetes namespace.
          If you don’t know Kubernetes API server URL use :
-          '''shell
-             kubectl cluster-info 
-          ''''
+        '''shell
+          kubectl cluster-info 
+        ''''
 
       -  Check Disable https certificate check.
 
