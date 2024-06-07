@@ -68,9 +68,9 @@
           **Steps**:
               - get the token of secret attached to ServiceAccount
     
-                ```shell
+              ```shell
                   kubectl -n jenkins  get secret jenkins-sa-secret -o jsonpath='{.data.token}' | base64 --decode
-                ```
+              ```
 
               - Go to Manage Jenkins → credentials → system → Global credentials (unrestricted) → Add Credentials
                   (select : Kind as secret text → Scope Golbal → fill the other details) → click Create.
