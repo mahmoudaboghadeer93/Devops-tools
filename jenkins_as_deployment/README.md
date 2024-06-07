@@ -77,7 +77,7 @@ password}" | base64 --decode);echo
     You can get jenkins-service private URL using
    
     '''shell
-       kubectl get svc -n jenkins 
+        kubectl get svc -n jenkins 
     ''''
 
 
