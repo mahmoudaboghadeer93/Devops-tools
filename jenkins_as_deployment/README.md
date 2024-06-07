@@ -20,9 +20,9 @@
 
 5️⃣ Deploy Jenkins resources (don't forget to use latest image of Jenkins, also change the jenkins domain to your own one):
 
-    ```shell
-      kubectl apply -f jenkins-server/ 
-     ````
+  ```shell
+        kubectl apply -f jenkins-server/ 
+  ````
 
 6️⃣ Open up a web browser, trigger your jenkins url!
     
