@@ -57,9 +57,9 @@ password}" | base64 --decode);echo
     If you don’t know Kubernetes API server URL use :
 
 
-    '''shell
-        kubectl cluster-info 
-    '''
+     '''shell
+         kubectl cluster-info 
+      '''
 
  -  Check Disable https certificate check.
 
@@ -77,9 +77,9 @@ password}" | base64 --decode);echo
       
     You can get jenkins-service private URL using
    
-   '''shell
-      kubectl get svc -n jenkins 
-   '''
+    '''shell
+       kubectl get svc -n jenkins 
+    '''
 
 
 
