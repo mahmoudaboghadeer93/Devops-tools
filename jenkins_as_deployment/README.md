@@ -10,19 +10,19 @@
 
     ```shell
       kubectl apply -f storage/ 
-     ````
+    ````
      
 4️⃣ Create RBAC (service account, cluster role, role binding , secret) that give the jenkins access for k8s resources , use this service account with jenkins deployment.
 
     ```shell
       kubectl apply -f RBAC/ 
-     ````
+    ````
 
 5️⃣ Deploy Jenkins resources (don't forget to use latest image of Jenkins, also change the jenkins domain to your own one):
 
     ```shell
       kubectl apply -f jenkins-server/ 
-     ````
+    ````
 
 6️⃣ Open up a web browser, trigger your jenkins url!
     
@@ -50,31 +50,35 @@ password}" | base64 --decode);echo
 ](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/image%20(1).png)
 
 
-      - Click create and edit cloud details by expanding Kubernetes Cloud Details.
+  - Click create and edit cloud details by expanding Kubernetes Cloud Details.
       
-      - Add URL of the Kubernetes API server in Kubernetes URL and namespace in kubernetes namespace.
-         If you don’t know Kubernetes API server URL use :
-        '''shell
-          kubectl cluster-info 
-        ''''
+  - Add URL of the Kubernetes API server in Kubernetes URL and namespace in kubernetes namespace.
 
-      -  Check Disable https certificate check.
+    If you don’t know Kubernetes API server URL use :
 
-      - (Note: this step we can skip it if the jenkins in same k8s) Use token of secret for your jenkins service account(jenkins-admin) which created in above (step 4️⃣ for deploy Jenkins) and use it to create jenkins credentials using:
-            add → jenkins → select kind as secret text → fill the details → Add.
+    '''shell
+       kubectl cluster-info 
+    ''''
+
+ -  Check Disable https certificate check.
+
+ -  Use token of secret for your jenkins service account(jenkins-admin) which created in above (step 4️⃣ for deploy Jenkins)
+    and use it to create jenkins credentials using (**Note:** this step we can skip it if the jenkins in same k8s):
+          **Steps**:  add → jenkins → select kind as secret text → fill the details → Add.
 
 [      [![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/018e1934-c010-4063-82e0-13157f9585cd)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png)]
 
-      - Use created credentials and click Test Connection.
+ - Use created credentials and click Test Connection.
 
 [     [ ![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/280b375a-86b3-483c-84bf-442a5798a23e)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds-test.png)]
 
-      - Add jenkins service private URL in Jenkins URL and leave rest as default and click Save.
+ - Add jenkins service private URL in Jenkins URL and leave rest as default and click Save.
       
-          You can get jenkins-service private URL using 
-         '''shell
-             kubectl get svc -n jenkins 
-          ''''
+    You can get jenkins-service private URL using
+   
+    '''shell
+       kubectl get svc -n jenkins 
+    ''''
 
 
 
