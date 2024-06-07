@@ -8,20 +8,20 @@
 
 3️⃣ Create Storage class ,PV, PVC after you changed the "volumeHandle: ID-of-EFS" inside PV.
 
-    ```shell
+  ```shell
       kubectl apply -f storage/ 
-     ````
+  ````
      
 4️⃣ Create RBAC (service account, cluster role, role binding , secret) that give the jenkins access for k8s resources , use this service account with jenkins deployment.
 
-    ```shell
-      kubectl apply -f RBAC/ 
-     ````
+  ```shell
+     kubectl apply -f RBAC/ 
+  ````
 
 5️⃣ Deploy Jenkins resources (don't forget to use latest image of Jenkins, also change the jenkins domain to your own one):
 
   ```shell
-        kubectl apply -f jenkins-server/ 
+     kubectl apply -f jenkins-server/ 
   ````
 
 6️⃣ Open up a web browser, trigger your jenkins url!
