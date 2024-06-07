@@ -62,9 +62,18 @@
 
  -  Check Disable https certificate check.
 
- -  Use token of secret for your jenkins service account(jenkins-admin) which created in above (step 4️⃣ for deploy Jenkins)
+ -  Use token of secret for your jenkins service account(jenkins-admin) which is created in above (step 4️⃣ for deploy Jenkins)
     and use it to create jenkins credentials using (**Note:** this step we can skip it if the jenkins in same k8s):
-          **Steps**:  add → jenkins → select kind as secret text → fill the details → Add.
+    
+          **Steps**:
+              - get the token of secret attached to ServiceAccount
+    
+                ```shell
+                  kubectl -n jenkins  get secret jenkins-sa-secret -o jsonpath='{.data.token}' | base64 --decode
+                ```
+
+              - Go to Manage Jenkins → credentials → system → Global credentials (unrestricted) → Add Credentials
+                  (select : Kind as secret text → Scope Golbal → fill the other details) → click Create.
 
 [      [![image](https://github.com/mahmoudaboghadeer93/Devops-tools/assets/69244659/018e1934-c010-4063-82e0-13157f9585cd)](https://github.com/mahmoudaboghadeer93/Devops-tools/blob/add-readme-for-jenkins/jenkins_as_deployment/creds1.png)]
 
