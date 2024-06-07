@@ -12,7 +12,7 @@
       kubectl apply -f storage/ 
   ````
      
-4️⃣ Create RBAC (service account, cluster role, role binding , secret) that give the jenkins access for k8s resources , use this service account with jenkins deployment.
+4️⃣ Create RBAC (service account, cluster role, role binding , secret) on k8s that you want your agent to run on it (in case you have multiple k8s cluster you want your agent to run on it )  that give the jenkins access for k8s resources , use this ServiceAccount with jenkins Master deployment,also use this ServiceAccount with the yaml file of agent that use it to run jenkins job.
 
   ```shell
      kubectl apply -f RBAC/ 
@@ -57,9 +57,9 @@ password}" | base64 --decode);echo
     If you don’t know Kubernetes API server URL use :
 
 
-     '''shell
-         kubectl cluster-info 
-      '''
+    ```shell
+          kubectl cluster-info 
+    ```
 
  -  Check Disable https certificate check.
 
@@ -77,9 +77,9 @@ password}" | base64 --decode);echo
       
     You can get jenkins-service private URL using
    
-    '''shell
+    ```shell
        kubectl get svc -n jenkins 
-    '''
+    ```
 
 
 
