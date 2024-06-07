@@ -56,9 +56,10 @@ password}" | base64 --decode);echo
 
     If you don’t know Kubernetes API server URL use :
 
-    '''shell
+
+   '''shell
        kubectl cluster-info 
-     ''''
+   ''''
 
  -  Check Disable https certificate check.
 
