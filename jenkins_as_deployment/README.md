@@ -30,8 +30,7 @@
    * Password:
     To get the password for the admin user, run the following command:
 
-    - printf $(kubectl get secret jenkins -o jsonpath="{.data.jenkins-admin-
-password}" | base64 --decode);echo   
+    - printf $(kubectl get secret jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo   
 
 *🎉 Now we have jenkins server  🎉*
 
