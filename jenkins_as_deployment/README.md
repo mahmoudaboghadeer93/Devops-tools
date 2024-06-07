@@ -16,13 +16,13 @@
 
   ```shell
      kubectl apply -f RBAC/ 
-  ````
+  ```
 
 5️⃣ Deploy Jenkins resources (don't forget to use latest image of Jenkins, also change the jenkins domain to your own one):
 
   ```shell
      kubectl apply -f jenkins-server/ 
-  ````
+  ```
 
 6️⃣ Open up a web browser, trigger your jenkins url!
     
@@ -59,7 +59,7 @@ password}" | base64 --decode);echo
 
     '''shell
         kubectl cluster-info 
-    ''''
+    '''
 
  -  Check Disable https certificate check.
 
@@ -79,7 +79,7 @@ password}" | base64 --decode);echo
    
    '''shell
       kubectl get svc -n jenkins 
-   ''''
+   '''
 
 
 
