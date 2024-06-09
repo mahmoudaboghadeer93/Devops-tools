@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-gh-runner
+  namespace: gh-runner  
+  labels:
+    app: gh-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gh-runner
+  template:
+    metadata:
+      labels:
+        app: gh-runner
+    spec:
+      containers:
+      - name: gh-runner
+        image: sanderknape/github-runner:latest #or the image you create it using the existing Dockerfile
+        env:
+        - name: GITHUB_OWNER
+          value: Github_owner-OR-OrgName
+        - name: RUNNER_LABELS
+          value: k8s-gh-runner,test0test
+        - name: GITHUB_PAT # stored separately in a Kubernetes secret
+          valueFrom:
+            secretKeyRef:
+              name: k8s-gh-runner
+              key: GITHUB_PAT        
+      tolerations:
+        - key: role
+          operator: Equal
+          value: monitor
+          effect: NoSchedule
+      nodeSelector:
+        role: monitor                                  
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: k8s-gh-runner
+  namespace: gh-runner
+spec:
+  dataFrom:
+    - extract:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: k8s-gh-runner
+  refreshInterval: 30s
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: global-secret-store
+  target:
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    name: k8s-gh-runner
