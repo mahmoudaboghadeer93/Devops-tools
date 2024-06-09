@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
       - name: gh-runner
-        image: sanderknape/github-runner:latest
+        image: sanderknape/github-runner:latest #or the image you create it using the existing Dockerfile
         env:
         - name: GITHUB_OWNER
-          value: trella-app
+          value: Github_owner-OR-OrgName
         - name: RUNNER_LABELS
           value: k8s-gh-runner,test0test
         - name: GITHUB_PAT # stored separately in a Kubernetes secret
@@ -46,7 +46,7 @@ spec:
     - extract:
         conversionStrategy: Default
         decodingStrategy: None
-        key: monitor/k8s-gh-runner
+        key: k8s-gh-runner
   refreshInterval: 30s
   secretStoreRef:
     kind: ClusterSecretStore
