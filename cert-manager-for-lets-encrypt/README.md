@@ -10,20 +10,18 @@
      To install cert-manager simply run :
      
      ```bash 
-     
-         kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.yaml
+        kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.yaml
      ```
 
      list iteams 
 
      ```bash    
-         kubectl get pods -n cert-manager
+        kubectl get pods -n cert-manager
      ```
   
    2️⃣ **we configure a Cluster Issuer LetsEncrypt** ( in our case to issue SSLs on the Fly. Create a file called cluster-issuer.yaml )
 
-   ```bash 
-   
+   ```bash   
       apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
       metadata:
@@ -38,13 +36,12 @@
             - http01:
                 ingress:
                   class: nginx
-     ```
+   ```
 
    3️⃣ **Update the ingress to use SSL**
    
    
    ```bash   
-   
       apiVersion: networking.k8s.io/v1
       kind: Ingress
       metadata:
@@ -69,5 +66,3 @@
                 - www.domain.net
               secretName: tls-2048-bilgicloud
    ```
-    
-   
