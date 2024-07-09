@@ -6,14 +6,14 @@
 
    1️⃣ **Install Cert-Manager** 
    
-     - Cert Manager is used to provision SSL Certificates to Kubernetes Clusters (https://github.com/cert-manager/cert-manager)
-         To install cert-manager simply run :
+   Cert Manager is used to provision SSL Certificates to Kubernetes Clusters (https://github.com/cert-manager/cert-manager)
+           To install cert-manager simply run :
      
    ```bash 
         kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.yaml
    ```
 
-     list iteams 
+   ***list iteams*** 
 
    ```bash    
         kubectl get pods -n cert-manager
