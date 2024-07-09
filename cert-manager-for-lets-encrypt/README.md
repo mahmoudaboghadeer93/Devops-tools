@@ -42,6 +42,7 @@
    3️⃣ **Update the ingress to use SSL**
    
    bash ```
+   
       apiVersion: networking.k8s.io/v1
       kind: Ingress
       metadata:
@@ -49,7 +50,6 @@
         annotations:
          kubernetes.io/ingress.class: nginx
          cert-manager.io/cluster-issuer: letsencrypt-prod
-      
       spec:
         rules:
         - host: www.domain.net
@@ -61,8 +61,7 @@
                   service:
                     name: test-svc
                     port:
-                      number: 80
-            
+                      number: 80            
         tls:
             - hosts:
                 - www.domain.net
