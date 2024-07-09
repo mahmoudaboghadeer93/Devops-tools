@@ -66,3 +66,7 @@
                 - www.domain.net
               secretName: tls-2048-bilgicloud
    ```
+
+**SSL takes a few minutes to issue. The issued Certificate is stored in the secret tls-2048-bilgicloud. On opening https://www.domain.net**
+
+***Congratulations, you can now connect to your page securely via https…****
