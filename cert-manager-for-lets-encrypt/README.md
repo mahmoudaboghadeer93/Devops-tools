@@ -9,21 +9,20 @@
      Cert Manager is used to provision SSL Certificates to Kubernetes Clusters (https://github.com/cert-manager/cert-manager)
      To install cert-manager simply run :
      
-     bash ``` 
+     ```bash 
      
          kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.yaml
      ```
 
      list iteams 
 
-     bash ```
-     
+     ```bash    
          kubectl get pods -n cert-manager
      ```
   
    2️⃣ **we configure a Cluster Issuer LetsEncrypt** ( in our case to issue SSLs on the Fly. Create a file called cluster-issuer.yaml )
 
-   bash ``` 
+   ```bash 
    
       apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
@@ -44,7 +43,7 @@
    3️⃣ **Update the ingress to use SSL**
    
    
-   bash ```   
+   ```bash   
    
       apiVersion: networking.k8s.io/v1
       kind: Ingress
