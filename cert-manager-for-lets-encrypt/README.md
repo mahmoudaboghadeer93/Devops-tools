@@ -5,8 +5,8 @@
 ***Steps***
 
    1️⃣ **Install Cert-Manager** 
+   
      Cert Manager is used to provision SSL Certificates to Kubernetes Clusters (https://github.com/cert-manager/cert-manager)
-
      To install cert-manager simply run -
      
      bash ``` 
@@ -41,8 +41,8 @@
 
    3️⃣ **Update the ingress to use SSL**
    
-   bash ```
    
+   bash ```   
       apiVersion: networking.k8s.io/v1
       kind: Ingress
       metadata:
