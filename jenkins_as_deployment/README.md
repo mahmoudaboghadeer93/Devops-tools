@@ -2,9 +2,14 @@
 
 # deploy Jenkins
 
-1️⃣ First Deploy EFS-Driver aadd-ons as "[here](https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)."
+1️⃣ First Deploy EFS-Driver add-ons as "[here](https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)."
 
-2️⃣ Create efs storage (for jenkins) with security group that allow port 2049 for VPC CIDR of k8s as "[here](https://aws.amazon.com/blogs/storage/deploying-jenkins-on-amazon-eks-with-amazon-efs/)."
+2️⃣ - Create efs storage for EKS on AWS (use it for jenkins) with security group that allow port 2049 for VPC CIDR of k8s as "[here](https://aws.amazon.com/blogs/storage/deploying-jenkins-on-amazon-eks-with-amazon-efs/)."
+
+**OR**
+
+   - Create NAS storage for ACK on Alibaba cloud (use it for jenkins) for PersistentVolume.
+  
 
 3️⃣ Create Storage class ,PV, PVC after you changed the "volumeHandle: ID-of-EFS" inside PV.
 
