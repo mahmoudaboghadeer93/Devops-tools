@@ -2,16 +2,29 @@
 
 # deploy Jenkins
 
-1️⃣ First Deploy EFS-Driver aadd-ons as "[here](https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)."
+1️⃣ First Deploy EFS-Driver add-ons as "[here](https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)."
 
-2️⃣ Create efs storage (for jenkins) with security group that allow port 2049 for VPC CIDR of k8s as "[here](https://aws.amazon.com/blogs/storage/deploying-jenkins-on-amazon-eks-with-amazon-efs/)."
+2️⃣ - Create efs storage for EKS on AWS (use it for jenkins) with security group that allow port 2049 for VPC CIDR of k8s as "[here](https://aws.amazon.com/blogs/storage/deploying-jenkins-on-amazon-eks-with-amazon-efs/)."
 
-3️⃣ Create Storage class ,PV, PVC after you changed the "volumeHandle: ID-of-EFS" inside PV.
+**OR**
+
+   - Create NAS storage for ACK on Alibaba cloud (use it for jenkins) for PersistentVolume.
+  
+
+3️⃣ - Create Storage class ,PV, PVC after you changed the "volumeHandle: ID-of-EFS" inside PV.
 
   ```shell
-      kubectl apply -f storage/ 
+      kubectl apply -f storage/aws-storage/
   ````
-     
+  **OR**  
+  
+   - Create PV, PVC after you changed the "server: ${NAS-ID}.${region-id}.nas.aliyuncs.com " inside PV.
+
+  ```shell
+      kubectl apply -f storage/Alibaba-storage/
+  ```` 
+  
+
 4️⃣ Create RBAC (service account, cluster role, role binding , secret) on k8s that you want your agent to run on it (in case you have multiple k8s cluster you want your agent to run on it )  that give the jenkins access for k8s resources , use this ServiceAccount with jenkins Master deployment,also use this ServiceAccount with the yaml file of agent that use it to run jenkins job.
 
   ```shell
@@ -68,9 +81,9 @@
           **Steps**:
               - get the token of secret attached to ServiceAccount
     
-              ```shell
-                  kubectl -n jenkins  get secret jenkins-sa-secret -o jsonpath='{.data.token}' | base64 --decode
-              ```
+    ```shell
+        kubectl -n jenkins  get secret jenkins-sa-secret -o jsonpath='{.data.token}' | base64 --decode
+    ```
 
               - Go to Manage Jenkins → credentials → system → Global credentials (unrestricted) → Add Credentials
                   (select : Kind as secret text → Scope Golbal → fill the other details) → click Create.
