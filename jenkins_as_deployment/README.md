@@ -11,12 +11,20 @@
    - Create NAS storage for ACK on Alibaba cloud (use it for jenkins) for PersistentVolume.
   
 
-3️⃣ Create Storage class ,PV, PVC after you changed the "volumeHandle: ID-of-EFS" inside PV.
+3️⃣ - Create Storage class ,PV, PVC after you changed the "volumeHandle: ID-of-EFS" inside PV.
 
   ```shell
-      kubectl apply -f storage/ 
+      kubectl apply -f storage/aws-storage/
   ````
-     
+  **OR**  
+  
+   - Create PV, PVC after you changed the "server: ${NAS-ID}.${region-id}.nas.aliyuncs.com " inside PV.
+
+  ```shell
+      kubectl apply -f storage/Alibaba-storage/
+  ```` 
+  
+
 4️⃣ Create RBAC (service account, cluster role, role binding , secret) on k8s that you want your agent to run on it (in case you have multiple k8s cluster you want your agent to run on it )  that give the jenkins access for k8s resources , use this ServiceAccount with jenkins Master deployment,also use this ServiceAccount with the yaml file of agent that use it to run jenkins job.
 
   ```shell
