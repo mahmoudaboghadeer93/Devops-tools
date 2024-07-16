@@ -68,33 +68,13 @@
         kubectl apply -f cluster-issuer.yaml
    ```
 
-   5️⃣ **Create Certificates for Multiple Domains:**
-
-      Define certificates for each domain you want to use. Here’s an example for the domains(create certificates.yaml):
-   
-   ```bash   
-        apiVersion: cert-manager.io/v1
-        kind: Certificate
-        metadata:
-          name: wildcard-cert-example
-          namespace: default # namsepace you want certificate to be on it with same ingress
-        spec:
-          secretName: wildcard-cert-secret-example-tls
-          issuerRef:
-            name: letsencrypt-dns
-            kind: ClusterIssuer
-          commonName: "*.demo.x.io"
-          dnsNames:
-          - "*.demo.x.io"
-   ```
-
    **Then**
    
    ```bash 
         kubectl apply -f certificates.yaml
    ```
 
-   6️⃣ **Configure Ingress Resources:**
+   6️⃣ **Configure Ingress Resources:** (will generate also certificate with same name of secret)
 
         Annotate your Ingress resources to use the appropriate TLS secrets:
 
@@ -121,6 +101,34 @@
           tls:
           - hosts:
             - 'portal.demo.x.io'
+            secretName: wildcard-cert-secret-example-tls #same name exist in certificate
+   ```
+
+**another wildcard domain Example**
+
+   ```bash   
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          name: example-ingress-demo
+          namespace: default
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-dns
+        spec:
+          rules:
+          - host: '*.demo.x.io'
+            http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: your-service
+                    port:
+                      number: 80
+          tls:
+          - hosts:
+            - '*.demo.x.io'
             secretName: wildcard-cert-secret-example-tls #same name exist in certificate
    ```
    
