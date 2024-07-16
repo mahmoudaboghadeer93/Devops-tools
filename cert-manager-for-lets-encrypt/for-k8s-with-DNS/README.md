@@ -124,6 +124,10 @@
             secretName: wildcard-cert-secret-example-tls #same name exist in certificate
    ```
    
-**SSL takes a few minutes to issue. The issued Certificate is stored in the secret tls-2048-bilgicloud. On opening https://www.domain.net**
+**SSL takes a few minutes to issue. The issued Certificate is stored in the secret wildcard-cert-secret-example-tls. On opening https://portal.demo.x.io**
 
 ***Congratulations, you can now connect to your page securely via https…****
+
+[cert-manager-Docs](https://cert-manager.io/docs/tutorials/acme/dns-validation/)
+
+[Cert-manager-resources](https://github.com/cert-manager/cert-manager)
