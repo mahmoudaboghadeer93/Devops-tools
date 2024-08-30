@@ -68,10 +68,10 @@
         kubectl apply -f cluster-issuer.yaml
    ```
 
-   **Then**
-   
+   5️⃣ **Create Secret of Certificates Key,cert,chain:**
+       
    ```bash 
-        kubectl apply -f certificates.yaml
+        kubectl create secret tls wildcard-cert-domain-io --cert=STAR.X.io-FullChain.crt --key=STAR.X.io.key -n NameSpace_Name
    ```
 
    6️⃣ **Configure Ingress Resources:** (will generate also certificate with same name of secret)
@@ -101,7 +101,7 @@
           tls:
           - hosts:
             - 'portal.demo.x.io'
-            secretName: wildcard-cert-secret-example-tls #same name exist in certificate
+            secretName: wildcard-cert-domain-io #same name of created secret of certificates
    ```
 
 **another wildcard domain Example**
@@ -129,7 +129,7 @@
           tls:
           - hosts:
             - '*.demo.x.io'
-            secretName: wildcard-cert-secret-example-tls #same name exist in certificate
+            secretName: wildcard-cert-domain-io #same name of created secret of certificates
    ```
    
 **SSL takes a few minutes to issue. The issued Certificate is stored in the secret wildcard-cert-secret-example-tls. On opening https://portal.demo.x.io**
