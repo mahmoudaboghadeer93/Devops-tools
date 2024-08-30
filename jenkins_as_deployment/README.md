@@ -48,7 +48,7 @@
 *🎉 Now we have jenkins server  🎉*
 
 
-# Configure Jenkins to deploy apps on k8s
+# Configure Jenkins to deploy apps on k8s (dynamic Agent)
 
    1️⃣ Install kuberenetes cloud plugin , other needed plugins as here
    
@@ -102,7 +102,38 @@
        kubectl get svc -n jenkins 
     ```
 
+**Note: If the jenkins not exist in same k8s**
+- Create another SVC with type Loadbalancer for jenkins JNLB Port(jenkins-svc-jnlb.yaml) :
+  
+```bash
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: jenkins-dynamic-svc
+    namespace: jenkins
+    labels:
+      app.kubernetes.io/name: jenkins-svc
+  spec:
+    ports:
+      - name: agent
+        protocol: TCP
+        port: 50000
+        targetPort: 50000
+    selector:
+      app.kubernetes.io/name: jenkins
+    type: LoadBalancer
+    sessionAffinity: None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    internalTrafficPolicy: Cluste
+```
 
+**Then**
+
+ ```bash
+   kubectl apply -f jenkins-svc-jnlb.yaml
+ ```
 
 -----
 ## Learn more from REF:
