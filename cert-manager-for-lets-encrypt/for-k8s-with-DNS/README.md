@@ -12,7 +12,7 @@
 
    2️⃣ **Install Cert-Manager Using Helm** 
    
-   Cert Manager is used to provision SSL Certificates to Kubernetes Clusters (https://github.com/cert-manager/cert-manager)
+       Cert Manager is used to provision SSL Certificates to Kubernetes Clusters (https://github.com/cert-manager/cert-manager)
            To install cert-manager simply run :
      
    ```bash 
