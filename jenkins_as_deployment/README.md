@@ -135,6 +135,9 @@
    kubectl apply -f jenkins-svc-jnlb.yaml
  ```
 
+<img width="1449" alt="image" src="https://github.com/user-attachments/assets/0c9160e0-a4dd-41b4-8472-67cb06d97997">
+
+
 -----
 ## Learn more from REF:
 
