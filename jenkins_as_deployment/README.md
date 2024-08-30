@@ -135,6 +135,9 @@
    kubectl apply -f jenkins-svc-jnlb.yaml
  ```
 
+- Create domain for jnlb LB of service in your DNS
+- use it in jenkins kuberentes cloud configs as below:
+  
 <img width="1449" alt="image" src="https://github.com/user-attachments/assets/0c9160e0-a4dd-41b4-8472-67cb06d97997">
 
 
