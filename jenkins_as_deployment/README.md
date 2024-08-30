@@ -90,7 +90,7 @@
     ```
 
 **Note: If the jenkins not exist in same k8s**
-- Create another SVC with type Loadbalancer for jenkins JNLB Port:
+- Create another SVC with type Loadbalancer for jenkins JNLB Port(jenkins-svc-jnlb.yaml) :
   
 ```bash
   apiVersion: v1
@@ -116,6 +116,11 @@
     internalTrafficPolicy: Cluste
 ```
 
+**Then**
+
+ ```bash
+   kubectl apply -f jenkins-svc-jnlb.yaml
+ ```
 
 -----
 ## Learn more from REF:
