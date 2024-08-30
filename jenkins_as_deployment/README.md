@@ -93,7 +93,7 @@
 - Create another SVC with type Loadbalancer for jenkins JNLB Port:
   
 ```bash
-      apiVersion: v1
+  apiVersion: v1
   kind: Service
   metadata:
     name: jenkins-dynamic-svc
@@ -115,6 +115,7 @@
     ipFamilyPolicy: SingleStack
     internalTrafficPolicy: Cluste
 ```
+
 
 -----
 ## Learn more from REF:
