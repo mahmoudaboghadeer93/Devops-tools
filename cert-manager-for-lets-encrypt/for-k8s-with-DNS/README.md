@@ -46,6 +46,7 @@
       spec:
         acme:
           server: https://acme-v02.api.letsencrypt.org/directory
+          preferredChain: ''
           email: <your-email>
           privateKeySecretRef:
             name: letsencrypt-dns
@@ -67,13 +68,7 @@
         kubectl apply -f cluster-issuer.yaml
    ```
 
-   5️⃣ **Create Secret of Certificates Key,cert,chain:**
-       
-   ```bash 
-        kubectl create secret tls wildcard-cert-domain-io --cert=STAR.X.io-FullChain.crt --key=STAR.X.io.key -n NameSpace_Name
-   ```
-
-   6️⃣ **Configure Ingress Resources:** (will generate also certificate with same name of secret)
+   5️⃣ **Configure Ingress Resources:** (will generate also certificate with same name of secret)
 
         Annotate your Ingress resources to use the appropriate TLS secrets:
 
