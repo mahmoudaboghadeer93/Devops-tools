@@ -26,54 +26,13 @@
         kubectl get pods -n cert-manager
    ```
 
-   3️⃣ **Create a Secret with AWS Credentials (or other cloud provider for DNS like Alicloud):**
-
-       Store the AWS credentials in a Kubernetes secret:
-   
-   ```bash    
-        kubectl create secret generic route53-credentials-secret --from-literal=aws-access-key-id=YOUR_ACCESS_KEY_ID --from-literal=aws-secret-access-key=YOUR_SECRET_ACCESS_KEY -n cert-manager
-   ```
-  
-   4️⃣ **Create a ClusterIssuer for DNS-01 Challenge:**
-
-        Create the ClusterIssuer for Let's Encrypt using DNS-01 challenge with Route 53. Here’s the updated cluster-issuer.yaml:
-        
-   ```bash   
-      apiVersion: cert-manager.io/v1
-      kind: ClusterIssuer
-      metadata:
-        name: letsencrypt-dns
-      spec:
-        acme:
-          server: https://acme-v02.api.letsencrypt.org/directory
-          email: <your-email>
-          privateKeySecretRef:
-            name: letsencrypt-dns
-          solvers:
-          - dns01:
-              route53:
-                region: eu-central-1 # Use the appropriate region for your Route 53 hosted zone
-                accessKeyIDSecretRef:
-                  name: route53-credentials-secret
-                  key: aws-access-key-id
-                secretAccessKeySecretRef:
-                  name: route53-credentials-secret
-                  key: aws-secret-access-key
-   ```
-
-  **Then**
-  
-   ```bash    
-        kubectl apply -f cluster-issuer.yaml
-   ```
-
-   5️⃣ **Create Secret of Certificates Key,cert,chain:**
+   3️⃣ **Create Secret of Certificates (Key,FullChain):**
        
    ```bash 
-        kubectl create secret tls wildcard-cert-domain-io --cert=STAR.X.io-FullChain.crt --key=STAR.X.io.key -n NameSpace_Name
+        kubectl create secret tls wildcard-cert-domain-com --cert=STAR.X.io-FullChain.crt --key=STAR.X.io.key -n NameSpace_Name
    ```
 
-   6️⃣ **Configure Ingress Resources:** (will generate also certificate with same name of secret)
+   4️⃣ **Configure Ingress Resources:** (will generate also certificate with same name of secret)
 
         Annotate your Ingress resources to use the appropriate TLS secrets:
 
@@ -82,12 +41,12 @@
         kind: Ingress
         metadata:
           name: example-ingress-demo
-          namespace: default
+          namespace: NameSpace_Name
           annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-dns
+            nginx.ingress.kubernetes.io/ssl-redirect=true
         spec:
           rules:
-          - host: 'portal.demo.x.io'
+          - host: 'portal.x.com'
             http:
               paths:
               - path: /
@@ -99,8 +58,8 @@
                       number: 80
           tls:
           - hosts:
-            - 'portal.demo.x.io'
-            secretName: wildcard-cert-domain-io #same name of created secret of certificates
+            - 'portal.x.com'
+            secretName: wildcard-cert-domain-com #same name of created secret of certificates
    ```
 
 **another wildcard domain Example**
@@ -110,12 +69,12 @@
         kind: Ingress
         metadata:
           name: example-ingress-demo
-          namespace: default
+          namespace: NameSpace_Name
           annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-dns
+            nginx.ingress.kubernetes.io/ssl-redirect=true
         spec:
           rules:
-          - host: '*.demo.x.io'
+          - host: '*.x.com'
             http:
               paths:
               - path: /
@@ -127,8 +86,8 @@
                       number: 80
           tls:
           - hosts:
-            - '*.demo.x.io'
-            secretName: wildcard-cert-domain-io #same name of created secret of certificates
+            - '*.x.com'
+            secretName: wildcard-cert-domain-com #same name of created secret of certificates
    ```
    
 **SSL takes a few minutes to issue. The issued Certificate is stored in the secret wildcard-cert-secret-example-tls. On opening https://portal.demo.x.io**
