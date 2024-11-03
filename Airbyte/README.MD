@@ -14,7 +14,7 @@
         helm install --values values.yaml preprod-airbyte airbyte/airbyte -n airbyte
     ```
 
-#For Upgrade:
+## For Upgrade:
 
 ```bash
     helm upgrade --install --values values.yaml preprod-airbyte airbyte/airbyte -n airbyte
