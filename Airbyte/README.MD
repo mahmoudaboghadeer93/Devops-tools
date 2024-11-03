@@ -1,11 +1,7 @@
 # Airbyte 
 
  
- ## Installation stpes
-
- Deploying Redis® architecture standalone Not replication with only one instance for 
- - Multiple databases 
- - Single write/read point (single master)
+## Installation stpes
 
 ```bash
 helm repo add airbyte https://airbytehq.github.io/helm-charts
