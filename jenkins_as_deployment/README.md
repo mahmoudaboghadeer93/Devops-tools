@@ -102,6 +102,12 @@
        kubectl get svc -n jenkins 
     ```
 
+EX: 
+
+```bash
+http://jenkins-svc.jenkins.svc.cluster.local:80
+```
+
 **Note: If the jenkins not exist in same k8s**
 - Create another SVC with type Loadbalancer for jenkins JNLB Port(jenkins-svc-jnlb.yaml) :
   
