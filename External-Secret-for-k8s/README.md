@@ -52,6 +52,7 @@ helm install external-secrets \
 ```shell
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterSecretStore
+metadata:
   name: global-secret-store
 spec:
   provider:
