@@ -70,7 +70,7 @@ spec:
 2-) then create your external-secret resources in k8s
 
 ```shell
- ---
+---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
