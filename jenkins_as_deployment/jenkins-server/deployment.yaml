@@ -22,7 +22,7 @@ spec:
             claimName: jenkins-pvc
       containers:
         - name: jenkins-manager
-          image: jenkins/jenkins:2.452.3
+          image: jenkins/jenkins:2.492.3-jdk21
           ports:
             - name: manager
               containerPort: 8080
