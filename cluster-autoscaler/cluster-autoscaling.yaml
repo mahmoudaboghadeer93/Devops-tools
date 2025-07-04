@@ -16,6 +16,9 @@ metadata:
     k8s-addon: cluster-autoscaler.addons.k8s.io
     k8s-app: cluster-autoscaler
 rules:
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["list", "watch", "get"]
   - apiGroups: [""]
     resources: ["events", "endpoints"]
     verbs: ["create", "patch"]
