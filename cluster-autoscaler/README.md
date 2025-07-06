@@ -49,8 +49,8 @@ kubectl -n kube-system edit deployment.apps/cluster-autoscaler
 ***Set the Cluster Autoscaler Image related to our current EKS Cluster version:***
 
  - Open https://github.com/kubernetes/autoscaler/releases
- - Find our release version (example: 1.28.n) and update the same.
- - Our Cluster version is 1.28 and our cluster autoscaler version is 1.18.2 as per above releases link
+ - Find our release version (example: 1.33.n) and update the same.
+ - Our Cluster version is 1.33 and our cluster autoscaler version is 1.33.0 as per above releases link
 ```shell
 # Template
 # Update Cluster Autoscaler Image Version
@@ -60,6 +60,10 @@ kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-auto
 # Update Cluster Autoscaler Image Version
 kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-autoscaler=us.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler:v1.28.2
 ```
+
+[***RFC***](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
+
+[***RFC***](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md)
 
 [***RFC***](https://www.stacksimplify.com/aws-eks/aws-eks-kubernetes-autoscaling/learn-to-master-cluster-autoscaler-on-aws-eks/)
 
