@@ -44,6 +44,17 @@ kubectl -n kube-system edit deployment.apps/cluster-autoscaler
         - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/eksdemo1
         - --balance-similar-node-groups
         - --skip-nodes-with-system-pods=false
+        - '--balance-similar-node-groups'
+        - '--skip-nodes-with-system-pods=false'
+        - '--scale-down-enabled=true'
+        - '--scale-down-unneeded-time=10m'
+        - '--scale-down-utilization-threshold=0.8'
+        - '--scale-down-delay-after-add=10m'
+        - '--scale-down-delay-after-delete=1m'
+        - '--scale-down-delay-after-failure=3m'
+        - '--max-node-provision-time=15m'
+        - '--new-pod-scale-up-delay=10s'
+
 ```
 
 ***Set the Cluster Autoscaler Image related to our current EKS Cluster version:***
