@@ -33,7 +33,7 @@ In this section we will setup prerequisites, deploy ARC into a K8s cluster, and 
 :one: Install cert-manager in your cluster. For more information, see "[cert-manager](https://cert-manager.io/docs/installation/)."
 
 ```shell
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
 ```
 
 <sub> *note:- This command uses v1.9.1. Please replace with a later version, if available.</sub>
