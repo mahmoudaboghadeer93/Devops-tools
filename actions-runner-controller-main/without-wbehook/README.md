@@ -1,5 +1,7 @@
 
-# Actions Runner Controller (ARC)
+# Actions Runner Controller (ARC) (Github APP with Pull driven)
+
+- I'm using pull driven (not webhook driven) autoscaling, because the k8s cluster in not externally accessible and webhook can’t be used, no public endpoint.
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6061/badge)](https://bestpractices.coreinfrastructure.org/projects/6061)
 [![awesome-runners](https://img.shields.io/badge/listed%20on-awesome--runners-blue.svg)](https://github.com/jonico/awesome-runners)
@@ -143,8 +145,7 @@ spec:
       dockerdWithinRunnerContainer: true     
       organization: ${Org_Name}
       labels:
-       - android
-       - android-slave
+       - ${label_name}
       group: ${group_name}
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
@@ -153,17 +154,17 @@ metadata:
   name: runner-deployment-autoscaler
   namespace: ${Namespace_name}
 spec:
-  scaleTargetRef:
-    name: ${runner_deployment_name}
-  minReplicas: 1
-  maxReplicas: 3
-  scaleDownDelaySecondsAfterScaleOut: 60
+spec:
+  maxReplicas: 15
   metrics:
-  - type: PercentageRunnersBusy
-    scaleUpThreshold: '0.75'
-    scaleDownThreshold: '0.3'
-    scaleUpFactor: '1.4'
-    scaleDownFactor: '0.7'
+    - repositoryNames:
+        - repo_name
+      type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+  minReplicas: 1
+  scaleDownDelaySecondsAfterScaleOut: 120
+  scaleTargetRef:
+    kind: RunnerDeployment
+    name: arc-runner-deployment
 ````
 Apply this file to your K8s cluster.
 ```shell
@@ -194,9 +195,6 @@ Also, this runner has been registered directly to the organization, you can see 
 
 There is also a quick start guide to get started on Actions, For more information, please refer to "[Quick start Guide to GitHub Actions](https://docs.github.com/en/actions/quickstart)."
 -----
-#### ARC Configuration Diagram
-
-![ARC_Config_Diagram](https://user-images.githubusercontent.com/69244659/209106744-9e4e86d5-f0b6-4b10-95e2-830f31a67ca2.png)
 
 ## Learn more from our REF:
 
